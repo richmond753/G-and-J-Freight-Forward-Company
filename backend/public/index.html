@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G and J Freight Services Limited</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & VARIABLES ─────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:   #0d1b2a;
+      --navy2:  #152438;
+      --steel:  #1e3a5f;
+      --gold:   #c9a227;
+      --gold2:  #e8b93a;
+      --sand:   #b89b6a;
+      --white:  #f4f1ec;
+      --mist:   #d6cfc3;
+      --text:   #e8e0d4;
+      --sm: clamp(0.85rem, 1.5vw, 0.95rem);
+      --base: clamp(1rem, 2vw, 1.1rem);
+      --lg: clamp(1.2rem, 2.5vw, 1.4rem);
+      --xl: clamp(1.5rem, 3vw, 2rem);
+      --xxl: clamp(2.5rem, 6vw, 5rem);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ─── NAVBAR ────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%;
+      background: rgba(13,27,42,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,162,39,0.2);
+      transition: padding 0.3s, background 0.3s;
+    }
+    nav.scrolled { padding: 0.6rem 5%; background: rgba(13,27,42,0.98); }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.75rem; text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 44px; height: 44px;
+      background: var(--gold);
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem; color: var(--navy); font-weight: 900;
+      flex-shrink: 0;
+    }
+    .nav-logo-text { line-height: 1.1; }
+    .nav-logo-text span:first-child {
+      display: block; font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.1em; color: var(--white);
+    }
+    .nav-logo-text span:last-child {
+      display: block; font-size: 0.65rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold);
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--mist);
+      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+      font-weight: 500; position: relative; transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--gold); transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--gold); color: var(--navy);
+      padding: 0.55rem 1.5rem; border: none; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; text-decoration: none;
+      clip-path: polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--gold); transition: all 0.3s; }
+
+    /* ─── HERO ──────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(160deg, rgba(13,27,42,0.88) 40%, rgba(21,36,56,0.7) 100%),
+        url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1800&q=80') center/cover no-repeat;
+      display: flex; align-items: center;
+      padding: 0 5%; padding-top: 90px;
+      position: relative; overflow: hidden;
+    }
+
+    /* animated diagonal lines */
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 40px,
+        rgba(201,162,39,0.03) 40px,
+        rgba(201,162,39,0.03) 41px
+      );
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(201,162,39,0.12); border: 1px solid rgba(201,162,39,0.35);
+      padding: 0.4rem 1rem; border-radius: 2px; margin-bottom: 1.5rem;
+      font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; }
+
+    .hero-content { max-width: 750px; }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: var(--xxl);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--white);
+      animation: fadeUp 0.9s 0.15s ease both;
+    }
+    .hero-title em { color: var(--gold); font-style: normal; }
+
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: var(--lg);
+      color: var(--mist);
+      font-weight: 300;
+      line-height: 1.6;
+      max-width: 560px;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+
+    .hero-stats {
+      display: flex; gap: 3rem; margin-top: 3rem;
+      animation: fadeUp 1s 0.45s ease both;
+    }
+    .hero-stat { border-left: 2px solid var(--gold); padding-left: 1rem; }
+    .hero-stat-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem;
+      color: var(--white); line-height: 1;
+    }
+    .hero-stat-num span { color: var(--gold); }
+    .hero-stat-label {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--sand); margin-top: 0.2rem;
+    }
+
+    .hero-buttons {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 0.85rem 2.2rem; border: none; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; text-decoration: none; display: inline-block;
+      clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+      transition: all 0.3s;
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,162,39,0.3); }
+
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: 0.85rem 2.2rem; border: 1px solid rgba(244,241,236,0.3);
+      cursor: pointer; font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; text-decoration: none; display: inline-block;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    .hero-ship {
+      position: absolute; right: -2%; bottom: 0;
+      width: 52%; max-width: 800px; opacity: 0.08;
+      background: url('https://images.unsplash.com/photo-1612599316791-451087c7fe15?w=900&q=60') center/contain no-repeat;
+      height: 70%; pointer-events: none;
+    }
+
+    /* ─── SCROLL INDICATOR ──────────────────────────────────────────── */
+    .scroll-down {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: var(--sand); font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; animation: pulse 2s infinite;
+    }
+    .scroll-down-line {
+      width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    /* ─── SECTION COMMON ────────────────────────────────────────────── */
+    section { padding: 7rem 5%; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; width: 30px; height: 1px; background: var(--gold);
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1; letter-spacing: 0.02em;
+      color: var(--white);
+    }
+    .section-title em { color: var(--gold); font-style: normal; }
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin: 1.5rem 0;
+    }
+
+    /* ─── ABOUT ─────────────────────────────────────────────────────── */
+    #about { background: var(--navy2); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center; margin-top: 3rem;
+    }
+    .about-text p {
+      color: var(--mist); font-size: var(--base); line-height: 1.8;
+      margin-bottom: 1.2rem; font-weight: 300;
+    }
+    .about-text strong { color: var(--gold); font-weight: 600; }
+
+    .about-visual {
+      position: relative;
+    }
+    .about-img-main {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border: 1px solid rgba(201,162,39,0.2);
+    }
+    .about-img-accent {
+      position: absolute;
+      bottom: -2rem; right: -2rem;
+      width: 55%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 3px solid var(--navy2);
+      outline: 1px solid rgba(201,162,39,0.3);
+    }
+    .about-badge {
+      position: absolute; top: -1.5rem; left: -1.5rem;
+      background: var(--gold);
+      width: 100px; height: 100px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+    }
+    .about-badge strong {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem; color: var(--navy); line-height: 1;
+    }
+    .about-badge span { font-size: 0.55rem; letter-spacing: 0.15em; color: var(--navy); text-transform: uppercase; font-weight: 700; }
+
+    /* ─── VISION/MISSION ────────────────────────────────────────────── */
+    #vision {
+      background: linear-gradient(135deg, var(--steel) 0%, var(--navy) 100%);
+      position: relative; overflow: hidden;
+    }
+    #vision::after {
+      content: '';
+      position: absolute; top: -50%; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,162,39,0.08), transparent 70%);
+      pointer-events: none;
+    }
+
+    .vmv-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      margin-top: 3rem; border: 1px solid rgba(201,162,39,0.2);
+    }
+    .vmv-card {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(201,162,39,0.2);
+      position: relative; overflow: hidden;
+      transition: background 0.4s;
+    }
+    .vmv-card:last-child { border-right: none; }
+    .vmv-card:hover { background: rgba(201,162,39,0.05); }
+    .vmv-card-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem; color: rgba(201,162,39,0.07);
+      position: absolute; top: 1rem; right: 1.5rem;
+      line-height: 1; user-select: none;
+    }
+    .vmv-icon {
+      width: 48px; height: 48px; margin-bottom: 1.5rem;
+      background: rgba(201,162,39,0.1); border: 1px solid rgba(201,162,39,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+    .vmv-card h3 {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem;
+      letter-spacing: 0.05em; color: var(--gold); margin-bottom: 1rem;
+    }
+    .vmv-card p { color: var(--mist); font-size: var(--sm); line-height: 1.8; font-weight: 300; }
+
+    .values-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; margin-top: 3rem;
+    }
+    .value-card {
+      padding: 2rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,162,39,0.15);
+      border-top: 3px solid var(--gold);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .value-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .value-card h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .value-card p { font-size: var(--sm); color: var(--mist); line-height: 1.7; font-weight: 300; }
+
+    /* ─── SERVICES ──────────────────────────────────────────────────── */
+    #services { background: var(--navy); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: rgba(201,162,39,0.15); margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--navy2); padding: 3rem 2.5rem;
+      position: relative; overflow: hidden;
+      transition: background 0.4s;
+      cursor: default;
+    }
+    .service-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 3px; background: var(--gold);
+      transition: width 0.5s;
+    }
+    .service-card:hover { background: rgba(21,36,56,0.9); }
+    .service-card:hover::before { width: 100%; }
+
+    .service-icon {
+      font-size: 2rem; margin-bottom: 1.5rem; display: block;
+      transition: transform 0.3s;
+    }
+    .service-card:hover .service-icon { transform: scale(1.15); }
+
+    .service-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(201,162,39,0.2); padding-bottom: 1rem;
+    }
+    .service-card p { font-size: var(--sm); color: var(--mist); line-height: 1.8; font-weight: 300; }
+
+    .service-num {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
+      color: rgba(201,162,39,0.05); line-height: 1; user-select: none;
+    }
+
+    /* ─── WHY US ─────────────────────────────────────────────────────── */
+    #why {
+      background: var(--navy2);
+    }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+      margin-top: 3rem;
+    }
+    .why-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .why-item {
+      display: flex; gap: 1.5rem; align-items: flex-start;
+      padding: 1.5rem; border: 1px solid rgba(201,162,39,0.1);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .why-item:hover { border-color: rgba(201,162,39,0.4); background: rgba(201,162,39,0.04); }
+    .why-item-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: rgba(201,162,39,0.1); border: 1px solid rgba(201,162,39,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .why-item-text h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 0.4rem;
+    }
+    .why-item-text p { font-size: var(--sm); color: var(--mist); line-height: 1.7; font-weight: 300; }
+
+    .why-image { position: relative; }
+    .why-image img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .why-image-caption {
+      position: absolute; bottom: 2rem; left: -2rem;
+      background: var(--gold); color: var(--navy);
+      padding: 1.5rem 2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      max-width: 240px;
+    }
+    .why-image-caption strong { display: block; font-size: 1.8rem; font-weight: 800; line-height: 1; }
+    .why-image-caption span { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600; }
+
+    /* ─── TEAM ──────────────────────────────────────────────────────── */
+    #team { background: var(--navy); }
+    .team-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;
+      margin-top: 3rem; max-width: 700px;
+    }
+    .team-card {
+      border: 1px solid rgba(201,162,39,0.2);
+      overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .team-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+    .team-card-top {
+      background: var(--steel); padding: 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .team-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--gold); display: flex; align-items: center; justify-content: center;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--navy); flex-shrink: 0;
+    }
+    .team-info h3 { font-size: 1.05rem; font-weight: 600; color: var(--white); }
+    .team-info span {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-weight: 500;
+    }
+    .team-card-body { padding: 1.5rem 2rem; background: rgba(255,255,255,0.02); }
+    .team-card-body p { font-size: var(--sm); color: var(--mist); line-height: 1.7; font-weight: 300; }
+
+    /* ─── CLIENTS ───────────────────────────────────────────────────── */
+    #clients {
+      background: var(--steel);
+      text-align: center;
+    }
+    .clients-logos {
+      display: flex; justify-content: center; align-items: center; gap: 4rem;
+      flex-wrap: wrap; margin-top: 3rem;
+    }
+    .client-logo {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      padding: 1.5rem 2.5rem;
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+      letter-spacing: 0.1em; color: var(--mist);
+      transition: all 0.3s;
+    }
+    .client-logo:hover { background: rgba(201,162,39,0.1); border-color: var(--gold); color: var(--gold); }
+
+    .testimonial {
+      max-width: 700px; margin: 4rem auto 0;
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(201,162,39,0.2);
+      padding: 3rem;
+      position: relative;
+    }
+    .testimonial::before {
+      content: '\201C';
+      position: absolute; top: -0.5rem; left: 2rem;
+      font-family: 'Bebas Neue', sans-serif; font-size: 5rem;
+      color: var(--gold); line-height: 1;
+    }
+    .testimonial p { font-size: var(--lg); color: var(--white); line-height: 1.7; font-weight: 300; font-style: italic; }
+    .testimonial cite {
+      display: block; margin-top: 1.5rem;
+      font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-style: normal; font-weight: 600;
+    }
+
+    /* ─── CONTACT ───────────────────────────────────────────────────── */
+    #contact { background: var(--navy); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      margin-top: 3rem;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .contact-item-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(201,162,39,0.1); border: 1px solid rgba(201,162,39,0.3);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .contact-item-text h4 {
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600; margin-bottom: 0.3rem;
+    }
+    .contact-item-text p, .contact-item-text a {
+      font-size: var(--sm); color: var(--mist); line-height: 1.7;
+      font-weight: 300; text-decoration: none;
+    }
+    .contact-item-text a:hover { color: var(--gold); }
+
+    /* contact form */
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); font-weight: 600;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,162,39,0.2);
+      color: var(--white);
+      padding: 0.85rem 1rem;
+      font-family: 'Barlow', sans-serif; font-size: var(--sm);
+      outline: none; transition: border-color 0.3s;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--navy2); }
+    .form-submit {
+      background: var(--gold); color: var(--navy);
+      padding: 1rem 2.5rem; border: none; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; align-self: flex-start;
+      clip-path: polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);
+      transition: all 0.3s;
+    }
+    .form-submit:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(201,162,39,0.3); }
+    .form-note { font-size: 0.75rem; color: var(--sand); }
+
+    /* ─── FOOTER ────────────────────────────────────────────────────── */
+    footer {
+      background: #070e17;
+      border-top: 1px solid rgba(201,162,39,0.2);
+      padding: 4rem 5% 2rem;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-brand p {
+      font-size: var(--sm); color: var(--sand); line-height: 1.8;
+      font-weight: 300; margin-top: 1.2rem; max-width: 300px;
+    }
+    .footer-col h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul li a {
+      font-size: var(--sm); color: var(--sand); text-decoration: none;
+      font-weight: 300; transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: 0.75rem; color: var(--sand); opacity: 0.6; }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    /* ─── ANIMATIONS ────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: translateX(-50%) translateY(0); }
+      50%       { opacity: 1;   transform: translateX(-50%) translateY(6px); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ─── MOBILE MENU ───────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu {
+        display: none; flex-direction: column; gap: 0;
+        position: fixed; top: 68px; left: 0; width: 100%;
+        background: rgba(13,27,42,0.98); border-top: 1px solid rgba(201,162,39,0.2);
+        z-index: 999; padding: 1rem 0;
+      }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu a {
+        padding: 1rem 5%;
+        text-decoration: none; color: var(--mist);
+        font-size: 0.9rem; letter-spacing: 0.15em; text-transform: uppercase;
+        font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.3s, background 0.3s;
+      }
+      .mobile-menu a:hover { color: var(--gold); background: rgba(201,162,39,0.05); }
+      .mobile-menu .btn-primary { margin: 1rem 5%; clip-path: none; text-align: center; }
+
+      .about-grid, .why-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-img-accent { display: none; }
+      .vmv-grid { grid-template-columns: 1fr; }
+      .vmv-card { border-right: none; border-bottom: 1px solid rgba(201,162,39,0.2); }
+      .vmv-card:last-child { border-bottom: none; }
+      .values-grid { grid-template-columns: repeat(2,1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+      .footer-top { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .why-image { display: none; }
+      .team-grid { grid-template-columns: 1fr; max-width: 400px; }
+      .form-row { grid-template-columns: 1fr; }
+      .clients-logos { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═════════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon">G&amp;J</div>
+    <div class="nav-logo-text">
+      <span>G and J</span>
+      <span>Freight Services</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a href="#contact" class="nav-cta">Get a Quote</a>
+
+  <div class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#team" onclick="closeMobile()">Team</a>
+  <a href="#clients" onclick="closeMobile()">Clients</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#contact" class="btn-primary" onclick="closeMobile()">Get a Quote</a>
+</div>
+
+
+<!-- ═══ HERO ════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span></span>Est. 2008 · Ghana's Trusted Freight Partner</div>
+    <h1 class="hero-title">
+      Moving Your<br/><em>World</em><br/>Forward
+    </h1>
+    <p class="hero-sub">
+      G and J Freight Services — a full Non-Vessel Operating Cargo Carrier (NVOCC) delivering sea &amp; air freight, warehousing, haulage and logistics solutions across Ghana and the globe.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">17<span>+</span></div>
+        <div class="hero-stat-label">Years in Business</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">6<span></span></div>
+        <div class="hero-stat-label">Core Services</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">100<span>%</span></div>
+        <div class="hero-stat-label">Customer Focus</div>
+      </div>
+    </div>
+    <div class="hero-buttons">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#contact" class="btn-outline">Contact Us</a>
+    </div>
+  </div>
+  <div class="hero-ship"></div>
+  <div class="scroll-down">
+    <div class="scroll-down-line"></div>
+    Scroll
+  </div>
+</section>
+
+
+<!-- ═══ ABOUT ═══════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-label reveal">About the Company</div>
+  <h2 class="section-title reveal">Your Cargo,<br/><em>Our Commitment</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="about-grid">
+    <div class="about-text reveal-left">
+      <p>
+        <strong>G and J Freight Services Limited</strong> is a Freight Forwarder and a full Non-Vessel Operating Cargo Carrier (NVOCC) company which has been in business since <strong>November 8, 2008</strong>.
+      </p>
+      <p>
+        We have quickly become a major player in clearing and forwarding, air freight, movers and packaging, transport and haulage, consolidation and deconsolidation services — offering a comprehensive range of logistics solutions tailored to every client's need.
+      </p>
+      <p>
+        We have developed and obtained the trust of almost all major shipping carriers and airlines, gaining very competitive service contract rates which we pass directly to our valued customers.
+      </p>
+      <p>
+        Our office is located at <strong>Ground Floor, Kpodo Plaza, Opposite Creator School, Tema Comm 4, Accra – Ghana</strong>.
+      </p>
+    </div>
+
+    <div class="about-visual reveal-right">
+      <div class="about-badge">
+        <strong>17</strong>
+        <span>Years</span>
+      </div>
+      <img
+        class="about-img-main"
+        src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=800&q=80"
+        alt="Port operations"
+        loading="lazy"
+      />
+      <img
+        class="about-img-accent"
+        src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&q=80"
+        alt="Freight containers"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ VISION / MISSION / VALUES ═══════════════════════════════════════ -->
+<section id="vision">
+  <div class="section-label reveal">What Defines Us</div>
+  <h2 class="section-title reveal">Vision, Mission<br/>&amp; <em>Core Values</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="vmv-grid reveal">
+    <div class="vmv-card">
+      <div class="vmv-card-num">01</div>
+      <div class="vmv-icon">🌍</div>
+      <h3>Vision</h3>
+      <p>To be a world class brand providing the safest and most customer-focused freight forwarding services on a global scale.</p>
+    </div>
+    <div class="vmv-card">
+      <div class="vmv-card-num">02</div>
+      <div class="vmv-icon">🎯</div>
+      <h3>Mission</h3>
+      <p>To develop innovative logistics solutions that are economical, convenient, and personalised to suit your needs and demands.</p>
+    </div>
+    <div class="vmv-card">
+      <div class="vmv-card-num">03</div>
+      <div class="vmv-icon">⚙️</div>
+      <h3>Values</h3>
+      <p>Productivity, innovation, determination, and teamwork drive every decision we make and every shipment we handle.</p>
+    </div>
+  </div>
+
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <h4>Productive</h4>
+      <p>Committed to maximising productivity and efficiency by delivering uniquely designed Shipping &amp; Logistics solutions.</p>
+    </div>
+    <div class="value-card reveal" style="transition-delay:0.1s">
+      <h4>Innovative</h4>
+      <p>Our success is based on our innovation and creativity — realised through flawless execution every step of the way.</p>
+    </div>
+    <div class="value-card reveal" style="transition-delay:0.2s">
+      <h4>Determined</h4>
+      <p>Your imagination is our reality. We solve import and export challenges before they even materialise.</p>
+    </div>
+    <div class="value-card reveal" style="transition-delay:0.3s">
+      <h4>Teamwork</h4>
+      <p>We work together toward a common vision, fostering open communication between our staff and customers.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ SERVICES ════════════════════════════════════════════════════════ -->
+<section id="services">
+  <div class="section-label reveal">What We Offer</div>
+  <h2 class="section-title reveal">Our <em>Services</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <span class="service-icon">✈️</span>
+      <h3>Air &amp; Sea Freight</h3>
+      <p>Full NVOCC and innovative Air and Sea freight services to local and international companies. Reliable, consistent international freight — every time.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <span class="service-num">02</span>
+      <span class="service-icon">🚢</span>
+      <h3>Import &amp; Export</h3>
+      <p>We provide comprehensive import and export services to local and international companies using the most price-effective methods available.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <span class="service-num">03</span>
+      <span class="service-icon">🏭</span>
+      <h3>Warehousing</h3>
+      <p>Open space warehouse with a professional warehouse management system for your cargo, plus collateral management services.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0s">
+      <span class="service-num">04</span>
+      <span class="service-icon">📦</span>
+      <h3>Consolidator</h3>
+      <p>Your trusted shipping partner. We consolidate, manage and deliver your cargo with precision and care — ensuring efficiency, affordability and peace of mind.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.1s">
+      <span class="service-num">05</span>
+      <span class="service-icon">🚛</span>
+      <h3>Haulage</h3>
+      <p>We manage the movement of your cargo from port to port, port to door, and door to door — with a fleet ready to serve Ghana and beyond.</p>
+    </div>
+    <div class="service-card reveal" style="transition-delay:0.2s">
+      <span class="service-num">06</span>
+      <span class="service-icon">💼</span>
+      <h3>Consultancy</h3>
+      <p>Professional consulting in all areas of freight and forwarding. We give you the best and most detailed view across all your logistics requests.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ WHY CHOOSE US ════════════════════════════════════════════════════ -->
+<section id="why">
+  <div class="section-label reveal">Why G &amp; J</div>
+  <h2 class="section-title reveal">Why Choose <em>Us</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="why-grid">
+    <div class="why-list">
+      <div class="why-item reveal">
+        <div class="why-item-icon">🤝</div>
+        <div class="why-item-text">
+          <h4>Trusted by Major Carriers</h4>
+          <p>We hold relationships with almost all major shipping carriers and airlines, giving us exceptional contract rates we pass directly to you.</p>
+        </div>
+      </div>
+      <div class="why-item reveal" style="transition-delay:0.1s">
+        <div class="why-item-icon">⚡</div>
+        <div class="why-item-text">
+          <h4>Fast &amp; Reliable</h4>
+          <p>Our extensive portfolio and geographical coverage in Ghana ensures timely delivery solutions and operational excellence.</p>
+        </div>
+      </div>
+      <div class="why-item reveal" style="transition-delay:0.2s">
+        <div class="why-item-icon">🔒</div>
+        <div class="why-item-text">
+          <h4>Secure &amp; Compliant</h4>
+          <p>All clearance and forwarding operations adhere strictly to regulatory and customs compliance standards in Ghana and internationally.</p>
+        </div>
+      </div>
+      <div class="why-item reveal" style="transition-delay:0.3s">
+        <div class="why-item-icon">📍</div>
+        <div class="why-item-text">
+          <h4>Locally Rooted, Globally Minded</h4>
+          <p>Based in Tema — Ghana's premier port city — we combine deep local knowledge with an international network that spans the globe.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="why-image reveal-right">
+      <img
+        src="https://images.unsplash.com/photo-1471897488648-5eae4ac6686b?w=700&q=80"
+        alt="Shipping operations"
+        loading="lazy"
+        style="border:1px solid rgba(201,162,39,0.2)"
+      />
+      <div class="why-image-caption">
+        <strong>17+</strong>
+        <span>Years of freight excellence</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ TEAM ═════════════════════════════════════════════════════════════ -->
+<section id="team">
+  <div class="section-label reveal">The People</div>
+  <h2 class="section-title reveal">Key <em>Personnel</em></h2>
+  <div class="section-divider reveal"></div>
+  <p class="reveal" style="color:var(--mist);font-size:var(--base);font-weight:300;max-width:550px;margin-bottom:0.5rem">
+    Our team comprises seasoned professionals with deep experience in freight forwarding and business operations — all centred on the customer's needs.
+  </p>
+
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-card-top">
+        <div class="team-avatar">PA</div>
+        <div class="team-info">
+          <h3>Mr. Philip Annan</h3>
+          <span>Managing Director</span>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <p>Responsible for the overall management of all strategic and operational Marketing and Customer Relationship activities.</p>
+      </div>
+    </div>
+
+    <div class="team-card reveal" style="transition-delay:0.15s">
+      <div class="team-card-top">
+        <div class="team-avatar">DA</div>
+        <div class="team-info">
+          <h3>Mr. Dean-Martin Annan</h3>
+          <span>Operations Manager</span>
+        </div>
+      </div>
+      <div class="team-card-body">
+        <p>Manages activities that affect operational decisions and business requirements, ensuring smooth day-to-day logistics.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ CLIENTS ══════════════════════════════════════════════════════════ -->
+<section id="clients">
+  <div class="section-label reveal" style="justify-content:center">Our Partners</div>
+  <h2 class="section-title reveal" style="text-align:center">Selected <em>Clients</em></h2>
+  <div class="section-divider reveal" style="margin:1.5rem auto"></div>
+
+  <div class="clients-logos reveal">
+    <div class="client-logo">MOL Ghana</div>
+    <div class="client-logo">Engineering &amp;<br/>Logistical Services Ghana Ltd</div>
+    <div class="client-logo">Elegant Homes Ltd</div>
+  </div>
+
+  <div class="testimonial reveal">
+    <p>Love their collaboration with me to deliver superb services. They really took all the stress I would have gone through to get my goods delivered to my company.</p>
+    <cite>— Elegant Homes Limited, Ghana</cite>
+  </div>
+</section>
+
+
+<!-- ═══ CONTACT ══════════════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="section-label reveal">Get in Touch</div>
+  <h2 class="section-title reveal">Contact <em>Us</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item reveal">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text">
+          <h4>Office Location</h4>
+          <p>Ground Floor, Kpodo Plaza, Opposite Creator School<br/>Tema Comm 4, Accra – Ghana</p>
+          <p style="margin-top:0.5rem;font-size:0.75rem;color:var(--sand)">Also: Tema, Comm 5 – Behind Last Hour</p>
+        </div>
+      </div>
+      <div class="contact-item reveal" style="transition-delay:0.1s">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text">
+          <h4>Phone Numbers</h4>
+          <a href="tel:+233244333374">+233 (0) 24 433 3374</a><br/>
+          <a href="tel:+233245839831">+233 (0) 24 583 9831</a><br/>
+          <a href="tel:+233207499123">+233 (0) 20 749 9123</a><br/>
+          <a href="tel:+233570793888">+233 (0) 57 079 3888</a>
+        </div>
+      </div>
+      <div class="contact-item reveal" style="transition-delay:0.2s">
+        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-text">
+          <h4>Email</h4>
+          <a href="mailto:info@gandjfreightservices.com">info@gandjfreightservices.com</a><br/>
+          <a href="mailto:gandjfreight23@gmail.com">gandjfreight23@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form reveal-right" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">First Name</label>
+          <input type="text" id="fname" placeholder="John" required />
+        </div>
+        <div class="form-group">
+          <label for="lname">Last Name</label>
+          <input type="text" id="lname" placeholder="Doe" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="john@company.com" required />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="+233 …" />
+      </div>
+      <div class="form-group">
+        <label for="service">Service Interested In</label>
+        <select id="service">
+          <option value="">— Select a Service —</option>
+          <option>Air &amp; Sea Freight</option>
+          <option>Import &amp; Export</option>
+          <option>Warehousing</option>
+          <option>Consolidation</option>
+          <option>Haulage</option>
+          <option>Consultancy</option>
+          <option>Other / General Enquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Tell us about your cargo and requirements…"></textarea>
+      </div>
+      <p class="form-note">We typically respond within 24 hours on business days.</p>
+      <button type="submit" class="form-submit">Send Message</button>
+      <div id="formFeedback" style="display:none;color:var(--gold);font-size:var(--sm);margin-top:0.5rem">
+        ✓ Thank you! We'll be in touch shortly.
+      </div>
+    </form>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#hero" class="nav-logo" style="text-decoration:none;">
+        <div class="nav-logo-icon">G&amp;J</div>
+        <div class="nav-logo-text">
+          <span>G and J</span>
+          <span>Freight Services</span>
+        </div>
+      </a>
+      <p>A world-class freight forwarding and NVOCC company based in Tema, Ghana. Moving your world forward since 2008.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#vision">Vision &amp; Mission</a></li>
+        <li><a href="#services">Our Services</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#clients">Clients</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Air &amp; Sea Freight</a></li>
+        <li><a href="#services">Import &amp; Export</a></li>
+        <li><a href="#services">Warehousing</a></li>
+        <li><a href="#services">Consolidation</a></li>
+        <li><a href="#services">Haulage</a></li>
+        <li><a href="#services">Consultancy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 G and J Freight Services Limited. All rights reserved.</p>
+    <p>Designed with care · <a href="mailto:info@gandjfreightservices.com">info@gandjfreightservices.com</a></p>
+  </div>
+</footer>
+
+
+<!-- ═══ JAVASCRIPT ════════════════════════════════════════════════════════ -->
+<script>
+  /* ── Navbar scroll ─────────────────────────── */
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ── Hamburger ─────────────────────────────── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const spans = hamburger.querySelectorAll('span');
+    if (mobileMenu.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+  }
+
+  /* ── Scroll reveal ─────────────────────────── */
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ── Form submit ───────────────────────────── */
+  async function handleSubmit(e) {
+  e.preventDefault();
+
+  const payload = {
+    firstName: document.getElementById('fname').value,
+    lastName:  document.getElementById('lname').value,
+    email:     document.getElementById('email').value,
+    phone:     document.getElementById('phone').value,
+    service:   document.getElementById('service').value,
+    message:   document.getElementById('message').value,
+  };
+
+  try {
+    const res  = await fetch('/api/contact', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload),
+    });
+    const data = await res.json();
+    const fb = document.getElementById('formFeedback');
+    fb.textContent = data.message;
+    fb.style.display = 'block';
+    if (res.ok) e.target.reset();
+  } catch {
+    const fb = document.getElementById('formFeedback');
+    fb.textContent = 'Network error. Please try again.';
+    fb.style.display = 'block';
+  }
+}
+
+  /* ── Active nav link ───────────────────────── */
+  const sections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    navAnchors.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>

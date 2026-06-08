@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://g-and-j-freight-forward-company.onrender.com/sitemap.xml

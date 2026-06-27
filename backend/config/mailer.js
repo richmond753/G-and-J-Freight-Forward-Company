@@ -8,9 +8,20 @@ const transporter = nodemailer.createTransport({
   host:   process.env.SMTP_HOST   || 'smtp.gmail.com',
   port:   parseInt(process.env.SMTP_PORT || '587', 10),
   secure: process.env.SMTP_SECURE === 'true', // true → port 465, false → STARTTLS
+  requireTLS: process.env.SMTP_SECURE !== 'true', // upgrade to TLS via STARTTLS on port 587
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
+  },
+  tls: {
+    // Local antivirus / corporate proxies often inject a self-signed root CA
+    // into the TLS chain, which Node rejects ("self-signed certificate in
+    // certificate chain"). Relax verification outside production, but keep it
+    // strict in production. Override explicitly with SMTP_TLS_REJECT_UNAUTHORIZED.
+    rejectUnauthorized:
+      process.env.SMTP_TLS_REJECT_UNAUTHORIZED !== undefined
+        ? process.env.SMTP_TLS_REJECT_UNAUTHORIZED === 'true'
+        : process.env.NODE_ENV === 'production',
   },
 });
 

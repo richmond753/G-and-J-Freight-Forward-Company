@@ -6,6 +6,24 @@
   <meta name="google-site-verification" content="Pm8CbZkT8CC4_BCRRobj8PbgY7Iagutc6-wOvskAfec" />
   <title>G and J Freight Services Limited</title>
   <meta name = "description" content = "G and J Freight Services Limited is a leading logistics company specializing in efficient and reliable freight solutions. With a commitment to excellence, we provide comprehensive transportation services tailored to meet the unique needs of our clients. Our experienced team ensures seamless delivery, competitive pricing, and exceptional customer service, making us the trusted choice for all your freight needs." />
+  <meta name="theme-color" content="#0d1b2a" />
+
+  <!-- Open Graph / social sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="G and J Freight Services Limited" />
+  <meta property="og:description" content="Full NVOCC freight forwarder in Tema, Ghana — sea & air freight, warehousing, haulage, import/export and logistics solutions since 2008." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80" />
+  <meta property="og:locale" content="en_GH" />
+
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="G and J Freight Services Limited" />
+  <meta name="twitter:description" content="Full NVOCC freight forwarder in Tema, Ghana — sea & air freight, warehousing, haulage and logistics solutions since 2008." />
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80" />
+
+  <!-- Favicon (inline SVG hexagon, matches the brand mark) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,0 100,25 100,75 50,100 0,75 0,25' fill='%23c9a227'/%3E%3Ctext x='50' y='62' font-family='Arial' font-size='30' font-weight='bold' fill='%230d1b2a' text-anchor='middle'%3EGJ%3C/text%3E%3C/svg%3E" />
+
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ─── RESET & VARIABLES ─────────────────────────────────────────── */
@@ -100,7 +118,7 @@
     }
     .nav-cta:hover { background: var(--gold2); transform: translateY(-1px); }
 
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
     .hamburger span { width: 24px; height: 2px; background: var(--gold); transition: all 0.3s; }
 
     /* ─── HERO ──────────────────────────────────────────────────────── */
@@ -604,6 +622,252 @@
     .reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
+    /* ─── ACCESSIBILITY ─────────────────────────────────────────────── */
+    .skip-link {
+      position: absolute; left: -999px; top: 0; z-index: 2000;
+      background: var(--gold); color: var(--navy);
+      padding: 0.75rem 1.25rem; font-weight: 700; text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.1em;
+    }
+    .skip-link:focus { left: 1rem; top: 1rem; }
+
+    /* visible keyboard focus everywhere */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    .hamburger:focus-visible {
+      outline: 2px solid var(--gold2);
+      outline-offset: 3px;
+    }
+
+    /* ─── CONTACT FORM ──────────────────────────────────────────────── */
+    .contact-form-wrap {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-top: 3px solid var(--gold);
+      padding: 2.5rem;
+    }
+    .contact-form-wrap h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 0.4rem;
+    }
+    .contact-form-wrap > p.form-intro {
+      font-size: var(--sm); color: var(--mist); font-weight: 300; margin-bottom: 1.5rem;
+    }
+    .form-group input.invalid,
+    .form-group textarea.invalid,
+    .form-group select.invalid { border-color: #e06666; }
+    .field-error {
+      font-size: 0.7rem; color: #f4a3a3; letter-spacing: 0.05em;
+      min-height: 0.9rem; display: none;
+    }
+    .field-error.show { display: block; }
+    .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .form-feedback {
+      display: none; padding: 0.9rem 1.1rem; font-size: var(--sm);
+      border-left: 3px solid var(--gold); line-height: 1.5;
+    }
+    .form-feedback.show { display: block; }
+    .form-feedback.success { background: rgba(80,200,120,0.12); border-color: #57c785; color: #cdeedd; }
+    .form-feedback.error   { background: rgba(224,102,102,0.12); border-color: #e06666; color: #f4cccc; }
+
+    /* small inline spinner used in the submit button */
+    .spinner {
+      width: 14px; height: 14px; border: 2px solid rgba(13,27,42,0.35);
+      border-top-color: var(--navy); border-radius: 50%;
+      display: inline-block; vertical-align: middle; margin-right: 0.5rem;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── MAP ───────────────────────────────────────────────────────── */
+    .contact-map {
+      margin-top: 2.5rem; border: 1px solid rgba(201,162,39,0.2);
+      overflow: hidden; line-height: 0;
+    }
+    .contact-map iframe { width: 100%; height: 280px; border: 0; filter: grayscale(0.3) contrast(1.05); }
+    .map-directions {
+      display: inline-block; margin-top: 1rem;
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none; font-weight: 600;
+    }
+    .map-directions:hover { color: var(--gold2); }
+
+    /* ─── PROCESS / HOW IT WORKS ────────────────────────────────────── */
+    #process { background: var(--navy2); }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px;
+      background: rgba(201,162,39,0.15); margin-top: 3rem;
+    }
+    .process-step {
+      background: var(--navy); padding: 2.5rem 1.5rem;
+      position: relative; transition: background 0.4s;
+    }
+    .process-step:hover { background: rgba(21,36,56,0.9); }
+    .process-num {
+      font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem;
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: var(--gold); color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+      margin-bottom: 1.2rem;
+    }
+    .process-step h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 0.5rem;
+    }
+    .process-step p { font-size: 0.8rem; color: var(--mist); line-height: 1.6; font-weight: 300; }
+
+    /* ─── FAQ ───────────────────────────────────────────────────────── */
+    #faq { background: var(--navy); }
+    .faq-list { max-width: 820px; margin: 3rem auto 0; }
+    .faq-item {
+      border: 1px solid rgba(201,162,39,0.15);
+      border-bottom: none;
+    }
+    .faq-item:last-child { border-bottom: 1px solid rgba(201,162,39,0.15); }
+    .faq-q {
+      width: 100%; text-align: left; cursor: pointer;
+      background: rgba(255,255,255,0.02); border: none;
+      padding: 1.4rem 1.6rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.05rem; letter-spacing: 0.05em; color: var(--white);
+      transition: background 0.3s, color 0.3s;
+    }
+    .faq-q:hover { background: rgba(201,162,39,0.05); color: var(--gold); }
+    .faq-q .faq-icon { color: var(--gold); font-size: 1.4rem; line-height: 1; transition: transform 0.3s; flex-shrink: 0; }
+    .faq-q[aria-expanded="true"] .faq-icon { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+      padding: 0 1.6rem;
+    }
+    .faq-a p {
+      font-size: var(--sm); color: var(--mist); line-height: 1.8;
+      font-weight: 300; padding-bottom: 1.4rem;
+    }
+    .faq-a.open { max-height: 320px; }
+
+    /* ─── FLOATING ACTION BUTTONS ───────────────────────────────────── */
+    .fab-stack {
+      position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 1100;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .fab {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; text-decoration: none; cursor: pointer;
+      border: none; color: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      transition: transform 0.25s, box-shadow 0.25s, opacity 0.3s, visibility 0.3s;
+    }
+    .fab:hover { transform: translateY(-3px) scale(1.05); }
+    .fab-whatsapp { background: #25d366; }
+    .fab-call { background: var(--gold); color: var(--navy); }
+    .fab-top {
+      background: var(--steel); color: var(--gold);
+      border: 1px solid rgba(201,162,39,0.4);
+      font-size: 1.3rem;
+      opacity: 0; visibility: hidden;
+    }
+    .fab-top.show { opacity: 1; visibility: visible; }
+
+    /* ─── GOOGLE TRANSLATE WIDGET ───────────────────────────────────── */
+    .nav-translate { display: flex; align-items: center; gap: 0.4rem; }
+    .nav-translate .globe { color: var(--gold); font-size: 1rem; line-height: 1; }
+    #google_translate_element { display: inline-block; line-height: 0; }
+    /* shrink the gadget's default text, then re-show only the select */
+    .goog-te-gadget { font-size: 0 !important; color: transparent !important; font-family: 'Barlow', sans-serif !important; }
+    .goog-te-gadget .goog-te-combo {
+      background: rgba(255,255,255,0.05);
+      color: var(--mist);
+      border: 1px solid rgba(201,162,39,0.3);
+      padding: 0.35rem 0.5rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      cursor: pointer; outline: none;
+      max-width: 150px;
+    }
+    .goog-te-combo:focus { border-color: var(--gold); }
+    .goog-te-combo option { background: var(--navy2); color: var(--white); }
+    /* hide Google's injected banner, logo & tooltip so the page stays clean */
+    .goog-te-banner-frame.skiptranslate,
+    .goog-te-gadget-icon,
+    .goog-logo-link,
+    .goog-te-gadget span,
+    #goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+    body { top: 0 !important; }
+    .goog-text-highlight { background: none !important; box-shadow: none !important; }
+
+    /* ─── CHAT ASSISTANT ────────────────────────────────────────────── */
+    .fab-chat { background: var(--navy2); color: var(--gold); border: 1px solid rgba(201,162,39,0.45); }
+    .chat-panel {
+      position: fixed; right: 1.25rem; bottom: 5.75rem; z-index: 1200;
+      width: 340px; max-width: calc(100vw - 2.5rem);
+      background: var(--navy2);
+      border: 1px solid rgba(201,162,39,0.3);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+      display: flex; flex-direction: column; overflow: hidden;
+      opacity: 0; visibility: hidden; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+    }
+    .chat-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .chat-header {
+      background: var(--navy); padding: 0.9rem 1.1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      border-bottom: 1px solid rgba(201,162,39,0.2);
+    }
+    .chat-avatar {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: var(--gold); color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+      font-family: 'Bebas Neue', sans-serif; font-size: 1rem;
+    }
+    .chat-header h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.05rem; letter-spacing: 0.06em; color: var(--white); text-transform: uppercase; line-height: 1.1; }
+    .chat-header .chat-status { font-size: 0.62rem; color: #57c785; letter-spacing: 0.12em; text-transform: uppercase; display: flex; align-items: center; gap: 0.3rem; }
+    .chat-header .chat-status .dot { width: 7px; height: 7px; border-radius: 50%; background: #57c785; display: inline-block; }
+    .chat-close { margin-left: auto; background: none; border: none; color: var(--mist); font-size: 1.4rem; cursor: pointer; line-height: 1; padding: 0 0.2rem; }
+    .chat-close:hover { color: var(--gold); }
+    .chat-body {
+      padding: 1rem; height: 320px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 0.7rem; background: var(--navy);
+    }
+    .chat-msg { max-width: 86%; padding: 0.65rem 0.85rem; font-size: 0.85rem; line-height: 1.5; border-radius: 2px; }
+    .chat-msg.bot { background: rgba(255,255,255,0.05); color: var(--text); align-self: flex-start; border-left: 2px solid var(--gold); }
+    .chat-msg.user { background: var(--gold); color: var(--navy); align-self: flex-end; font-weight: 500; }
+    .chat-msg a { color: var(--gold2); }
+    .chat-msg.user a { color: var(--navy); }
+    .chat-quick { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1rem 0.75rem; background: var(--navy); }
+    .chat-quick button {
+      background: rgba(201,162,39,0.1); border: 1px solid rgba(201,162,39,0.3);
+      color: var(--gold); font-size: 0.68rem; padding: 0.4rem 0.65rem; cursor: pointer;
+      letter-spacing: 0.03em; transition: background 0.2s;
+    }
+    .chat-quick button:hover { background: rgba(201,162,39,0.2); }
+    .chat-input { display: flex; border-top: 1px solid rgba(201,162,39,0.2); }
+    .chat-input input {
+      flex: 1; background: var(--navy2); border: none; color: var(--white);
+      padding: 0.85rem 1rem; font-family: 'Barlow', sans-serif; font-size: 0.85rem; outline: none;
+    }
+    .chat-input button {
+      background: var(--gold); color: var(--navy); border: none; padding: 0 1.2rem; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.1em; font-size: 0.85rem;
+    }
+    .chat-input button:hover { background: var(--gold2); }
+    @media (max-width: 480px) {
+      .chat-panel { right: 0.75rem; left: 0.75rem; width: auto; bottom: 5.25rem; }
+      .nav-translate .globe { display: none; }
+      .goog-te-gadget .goog-te-combo { max-width: 120px; font-size: 0.72rem; }
+    }
+
     /* ─── MOBILE MENU ───────────────────────────────────────────────── */
    @media (max-width: 900px) {
   .nav-links, .nav-cta { display: none; }
@@ -633,6 +897,9 @@
   .values-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
   .services-grid { grid-template-columns: 1fr; }
   .service-card { padding: 2rem 1.5rem; }
+  .process-grid { grid-template-columns: 1fr; }
+  .contact-form-wrap { padding: 1.75rem 1.25rem; }
+  .contact-map iframe { height: 220px; }
   .footer-top { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; text-align: center; }
   .why-image { display: none; }
@@ -677,9 +944,22 @@
   .values-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: 1rem; }
 }
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal, .reveal-left, .reveal-right { opacity: 1 !important; transform: none !important; }
+}
   </style>
 </head>
 <body>
+
+<a href="#main" class="skip-link">Skip to content</a>
 
 <!-- ═══ NAVBAR ═════════════════════════════════════════════════════════ -->
 <nav id="navbar">
@@ -693,22 +973,29 @@
 
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
+    <li><a href="#vision">Vision</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#team">Team</a></li>
     <li><a href="#clients">Clients</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
 
+  <div class="nav-translate" title="Translate this page">
+    <span class="globe" aria-hidden="true">🌐</span>
+    <div id="google_translate_element"></div>
+  </div>
+
   <a href="#contact" class="nav-cta">Get a Quote</a>
 
-  <div class="hamburger" id="hamburger" aria-label="Open menu">
+  <button class="hamburger" id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#vision" onclick="closeMobile()">Vision</a>
   <a href="#services" onclick="closeMobile()">Services</a>
   <a href="#team" onclick="closeMobile()">Team</a>
   <a href="#clients" onclick="closeMobile()">Clients</a>
@@ -716,6 +1003,8 @@
   <a href="#contact" class="btn-primary" onclick="closeMobile()">Get a Quote</a>
 </div>
 
+
+<span id="main" tabindex="-1"></span>
 
 <!-- ═══ HERO ════════════════════════════════════════════════════════════ -->
 <section id="hero">
@@ -729,7 +1018,7 @@
     </p>
     <div class="hero-stats">
       <div class="hero-stat">
-        <div class="hero-stat-num">17<span>+</span></div>
+        <div class="hero-stat-num" id="yearsStat">17<span>+</span></div>
         <div class="hero-stat-label">Years in Business</div>
       </div>
       <div class="hero-stat">
@@ -778,7 +1067,7 @@
 
     <div class="about-visual reveal-right">
       <div class="about-badge">
-        <strong>17</strong>
+        <strong id="yearsBadge">17</strong>
         <span>Years</span>
       </div>
       <img
@@ -807,19 +1096,19 @@
   <div class="vmv-grid reveal">
     <div class="vmv-card">
       <div class="vmv-card-num">01</div>
-      <div class="vmv-icon">🌍</div>
+      <div class="vmv-icon" aria-hidden="true">🌍</div>
       <h3>Vision</h3>
       <p>To be a world class brand providing the safest and most customer-focused freight forwarding services on a global scale.</p>
     </div>
     <div class="vmv-card">
       <div class="vmv-card-num">02</div>
-      <div class="vmv-icon">🎯</div>
+      <div class="vmv-icon" aria-hidden="true">🎯</div>
       <h3>Mission</h3>
       <p>To develop innovative logistics solutions that are economical, convenient, and personalised to suit your needs and demands.</p>
     </div>
     <div class="vmv-card">
       <div class="vmv-card-num">03</div>
-      <div class="vmv-icon">⚙️</div>
+      <div class="vmv-icon" aria-hidden="true">⚙️</div>
       <h3>Values</h3>
       <p>Productivity, innovation, determination, and teamwork drive every decision we make and every shipment we handle.</p>
     </div>
@@ -855,37 +1144,37 @@
   <div class="services-grid">
     <div class="service-card reveal">
       <span class="service-num">01</span>
-      <span class="service-icon">✈️</span>
+      <span class="service-icon" aria-hidden="true">✈️</span>
       <h3>Air &amp; Sea Freight</h3>
       <p>Full NVOCC and innovative Air and Sea freight services to local and international companies. Reliable, consistent international freight — every time.</p>
     </div>
     <div class="service-card reveal" style="transition-delay:0.1s">
       <span class="service-num">02</span>
-      <span class="service-icon">🚢</span>
+      <span class="service-icon" aria-hidden="true">🚢</span>
       <h3>Import &amp; Export</h3>
       <p>We provide comprehensive import and export services to local and international companies using the most price-effective methods available.</p>
     </div>
     <div class="service-card reveal" style="transition-delay:0.2s">
       <span class="service-num">03</span>
-      <span class="service-icon">🏭</span>
+      <span class="service-icon" aria-hidden="true">🏭</span>
       <h3>Warehousing</h3>
       <p>Open space warehouse with a professional warehouse management system for your cargo, plus collateral management services.</p>
     </div>
     <div class="service-card reveal" style="transition-delay:0s">
       <span class="service-num">04</span>
-      <span class="service-icon">📦</span>
+      <span class="service-icon" aria-hidden="true">📦</span>
       <h3>Consolidator</h3>
       <p>Your trusted shipping partner. We consolidate, manage and deliver your cargo with precision and care — ensuring efficiency, affordability and peace of mind.</p>
     </div>
     <div class="service-card reveal" style="transition-delay:0.1s">
       <span class="service-num">05</span>
-      <span class="service-icon">🚛</span>
+      <span class="service-icon" aria-hidden="true">🚛</span>
       <h3>Haulage</h3>
       <p>We manage the movement of your cargo from port to port, port to door, and door to door — with a fleet ready to serve Ghana and beyond.</p>
     </div>
     <div class="service-card reveal" style="transition-delay:0.2s">
       <span class="service-num">06</span>
-      <span class="service-icon">💼</span>
+      <span class="service-icon" aria-hidden="true">💼</span>
       <h3>Consultancy</h3>
       <p>Professional consulting in all areas of freight and forwarding. We give you the best and most detailed view across all your logistics requests.</p>
     </div>
@@ -902,28 +1191,28 @@
   <div class="why-grid">
     <div class="why-list">
       <div class="why-item reveal">
-        <div class="why-item-icon">🤝</div>
+        <div class="why-item-icon" aria-hidden="true">🤝</div>
         <div class="why-item-text">
           <h4>Trusted by Major Carriers</h4>
           <p>We hold relationships with almost all major shipping carriers and airlines, giving us exceptional contract rates we pass directly to you.</p>
         </div>
       </div>
       <div class="why-item reveal" style="transition-delay:0.1s">
-        <div class="why-item-icon">⚡</div>
+        <div class="why-item-icon" aria-hidden="true">⚡</div>
         <div class="why-item-text">
           <h4>Fast &amp; Reliable</h4>
           <p>Our extensive portfolio and geographical coverage in Ghana ensures timely delivery solutions and operational excellence.</p>
         </div>
       </div>
       <div class="why-item reveal" style="transition-delay:0.2s">
-        <div class="why-item-icon">🔒</div>
+        <div class="why-item-icon" aria-hidden="true">🔒</div>
         <div class="why-item-text">
           <h4>Secure &amp; Compliant</h4>
           <p>All clearance and forwarding operations adhere strictly to regulatory and customs compliance standards in Ghana and internationally.</p>
         </div>
       </div>
       <div class="why-item reveal" style="transition-delay:0.3s">
-        <div class="why-item-icon">📍</div>
+        <div class="why-item-icon" aria-hidden="true">📍</div>
         <div class="why-item-text">
           <h4>Locally Rooted, Globally Minded</h4>
           <p>Based in Tema — Ghana's premier port city — we combine deep local knowledge with an international network that spans the globe.</p>
@@ -939,9 +1228,45 @@
         style="border:1px solid rgba(201,162,39,0.2)"
       />
       <div class="why-image-caption">
-        <strong>17+</strong>
+        <strong id="yearsCaption">17+</strong>
         <span>Years of freight excellence</span>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ HOW IT WORKS ═════════════════════════════════════════════════════ -->
+<section id="process">
+  <div class="section-label reveal">Simple &amp; Transparent</div>
+  <h2 class="section-title reveal">How It <em>Works</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="process-grid reveal">
+    <div class="process-step">
+      <div class="process-num">1</div>
+      <h4>Enquiry</h4>
+      <p>Send us your cargo details and requirements through the form, phone or WhatsApp.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">2</div>
+      <h4>Quote</h4>
+      <p>We respond within 24 hours with a competitive, all-inclusive freight quotation.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">3</div>
+      <h4>Booking</h4>
+      <p>On approval, we book space with our carrier partners and prepare your documentation.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">4</div>
+      <h4>Clearance</h4>
+      <p>Our team handles customs clearance, compliance and consolidation end to end.</p>
+    </div>
+    <div class="process-step">
+      <div class="process-num">5</div>
+      <h4>Delivery</h4>
+      <p>We haul your cargo port-to-door and keep you updated until it safely arrives.</p>
     </div>
   </div>
 </section>
@@ -1002,6 +1327,72 @@
     <p>Love their collaboration with me to deliver superb services. They really took all the stress I would have gone through to get my goods delivered to my company.</p>
     <cite>— Elegant Homes Limited, Ghana</cite>
   </div>
+
+  <div class="testimonial reveal" style="transition-delay:0.1s">
+    <p>Reliable, professional and always on time. G and J handled our sea freight and customs clearance seamlessly — exactly the partner a growing business needs.</p>
+    <cite>— Engineering &amp; Logistical Services Ghana Ltd</cite>
+  </div>
+
+  <div class="testimonial reveal" style="transition-delay:0.2s">
+    <p>Their competitive carrier rates and clear communication made shipping with G and J effortless. We trust them with every consignment.</p>
+    <cite>— MOL Ghana</cite>
+  </div>
+</section>
+
+
+<!-- ═══ FAQ ══════════════════════════════════════════════════════════════ -->
+<section id="faq">
+  <div class="section-label reveal">Good to Know</div>
+  <h2 class="section-title reveal">Frequently Asked <em>Questions</em></h2>
+  <div class="section-divider reveal"></div>
+
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        How do I get a freight quote?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Simply fill in the quote form in the Contact section below, call us, or message us on WhatsApp with your cargo type, origin, destination and approximate weight or volume. We typically respond within 24 hours on business days.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        Which countries and ports do you cover?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        <p>As a full NVOCC with relationships across major shipping carriers and airlines, we move cargo globally — port-to-port, port-to-door and door-to-door — with our home base at Tema Port, Ghana.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        Do you handle customs clearance and documentation?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Yes. Our clearing and forwarding team manages the full customs process and all required documentation in strict compliance with Ghanaian and international regulations.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        What types of cargo can you ship?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        <p>We handle air and sea freight, full and consolidated container loads, general cargo, project cargo, and offer warehousing, haulage and movers &amp; packaging services. Contact us for specialised or oversized cargo.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" type="button" aria-expanded="false">
+        What are your business hours?
+        <span class="faq-icon" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Our offices are open Monday to Friday, 8:00am – 5:00pm and Saturday 9:00am – 1:00pm (GMT). For urgent enquiries outside these hours, reach us on WhatsApp and we'll respond as soon as possible.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 
@@ -1014,7 +1405,7 @@
   <div class="contact-grid">
     <div class="contact-info">
       <div class="contact-item reveal">
-        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-icon" aria-hidden="true">📍</div>
         <div class="contact-item-text">
           <h4>Office Location</h4>
           <p>Ground Floor, Kpodo Plaza, Opposite Creator School<br/>Tema Comm 4, Accra – Ghana</p>
@@ -1022,7 +1413,7 @@
         </div>
       </div>
       <div class="contact-item reveal" style="transition-delay:0.1s">
-        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-icon" aria-hidden="true">📞</div>
         <div class="contact-item-text">
           <h4>Phone Numbers</h4>
           <a href="tel:+233244333374">+233 (0) 24 433 3374</a><br/>
@@ -1032,15 +1423,91 @@
         </div>
       </div>
       <div class="contact-item reveal" style="transition-delay:0.2s">
-        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-icon" aria-hidden="true">✉️</div>
         <div class="contact-item-text">
           <h4>Email</h4>
           <a href="mailto:info@gandjfreightservices.com">info@gandjfreightservices.com</a><br/>
           <a href="mailto:gandjfreight23@gmail.com">gandjfreight23@gmail.com</a>
         </div>
       </div>
-    </div>   
+      <div class="contact-item reveal" style="transition-delay:0.3s">
+        <div class="contact-item-icon" aria-hidden="true">🕒</div>
+        <div class="contact-item-text">
+          <h4>Business Hours</h4>
+          <p>Mon – Fri: 8:00am – 5:00pm<br/>Sat: 9:00am – 1:00pm (GMT)</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote / contact form -->
+    <div class="contact-form-wrap reveal-right">
+      <h3>Request a Quote</h3>
+      <p class="form-intro">Tell us about your shipment and we'll get back to you within 24 hours.</p>
+
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name *</label>
+            <input type="text" id="fname" name="firstName" maxlength="80" autocomplete="given-name" required />
+            <span class="field-error" data-for="fname"></span>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name *</label>
+            <input type="text" id="lname" name="lastName" maxlength="80" autocomplete="family-name" required />
+            <span class="field-error" data-for="lname"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+            <span class="field-error" data-for="email"></span>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+233 ..." />
+            <span class="field-error" data-for="phone"></span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="service">Service of Interest</label>
+          <select id="service" name="service">
+            <option value="">Select a service…</option>
+            <option>Air &amp; Sea Freight</option>
+            <option>Import &amp; Export</option>
+            <option>Warehousing</option>
+            <option>Consolidator</option>
+            <option>Haulage</option>
+            <option>Consultancy</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" minlength="10" maxlength="2000" required
+            placeholder="Cargo type, origin, destination, approximate weight/volume…"></textarea>
+          <span class="field-error" data-for="message"></span>
+        </div>
+
+        <div class="form-feedback" id="formFeedback" role="status" aria-live="polite"></div>
+
+        <button type="submit" class="form-submit" id="formSubmit">Send Enquiry</button>
+        <p class="form-note">* Required fields. We respect your privacy and never share your details.</p>
+      </form>
+    </div>
   </div>
+
+  <!-- Office map -->
+  <div class="contact-map reveal">
+    <iframe
+      title="G and J Freight Services office location, Tema, Accra, Ghana"
+      src="https://www.google.com/maps?q=Tema+Community+4,+Accra,+Ghana&output=embed"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <a class="map-directions" href="https://www.google.com/maps/search/?api=1&query=Kpodo+Plaza+Tema+Community+4+Accra+Ghana" target="_blank" rel="noopener">→ Get directions to our office</a>
 </section>
 
 
@@ -1081,10 +1548,52 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2024 G and J Freight Services Limited. All rights reserved.</p>
+    <p>© <span id="footerYear">2024</span> G and J Freight Services Limited. All rights reserved.</p>
     <p>Designed with care · <a href="mailto:info@gandjfreightservices.com">info@gandjfreightservices.com</a></p>
   </div>
 </footer>
+
+
+<!-- ═══ FLOATING ACTION BUTTONS ══════════════════════════════════════════ -->
+<div class="fab-stack">
+  <button class="fab fab-chat" id="chatToggle" type="button" aria-label="Open chat assistant" aria-controls="chatPanel" aria-expanded="false" title="Ask our assistant">
+    <span aria-hidden="true">🤖</span>
+  </button>
+  <a class="fab fab-whatsapp" href="https://wa.me/233244333374?text=Hello%20G%20and%20J%20Freight%2C%20I%27d%20like%20a%20quote."
+     target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" title="WhatsApp us">
+    <span aria-hidden="true">💬</span>
+  </a>
+  <a class="fab fab-call" href="tel:+233244333374" aria-label="Call G and J Freight Services" title="Call us">
+    <span aria-hidden="true">📞</span>
+  </a>
+  <button class="fab fab-top" id="backToTop" type="button" aria-label="Back to top" title="Back to top">
+    <span aria-hidden="true">↑</span>
+  </button>
+</div>
+
+<!-- ═══ CHAT ASSISTANT PANEL ═════════════════════════════════════════════ -->
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="G and J Freight assistant" aria-hidden="true">
+  <div class="chat-header">
+    <div class="chat-avatar" aria-hidden="true">G&amp;J</div>
+    <div>
+      <h4>G&amp;J Assistant</h4>
+      <span class="chat-status"><span class="dot"></span>Online</span>
+    </div>
+    <button class="chat-close" id="chatClose" type="button" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-quick" id="chatQuick">
+    <button type="button" data-q="quote">Get a quote</button>
+    <button type="button" data-q="services">Services</button>
+    <button type="button" data-q="contact">Contact</button>
+    <button type="button" data-q="hours">Hours</button>
+    <button type="button" data-q="track">Track shipment</button>
+  </div>
+  <form class="chat-input" id="chatForm">
+    <input type="text" id="chatInput" placeholder="Ask a question…" autocomplete="off" aria-label="Type your message" />
+    <button type="submit" aria-label="Send message">Send</button>
+  </form>
+</div>
 
 
 <!-- ═══ JAVASCRIPT ════════════════════════════════════════════════════════ -->
@@ -1099,9 +1608,11 @@
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
   hamburger.addEventListener('click', () => {
-    mobileMenu.classList.toggle('open');
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
     const spans = hamburger.querySelectorAll('span');
-    if (mobileMenu.classList.contains('open')) {
+    if (isOpen) {
       spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
       spans[1].style.opacity = '0';
       spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
@@ -1111,8 +1622,17 @@
   });
   function closeMobile() {
     mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
     hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
   }
+  /* Close the mobile menu with the Escape key */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      closeMobile();
+      hamburger.focus();
+    }
+  });
 
   /* ── Scroll reveal ─────────────────────────── */
   const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
@@ -1123,36 +1643,90 @@
   }, { threshold: 0.12 });
   revealEls.forEach(el => observer.observe(el));
 
+  /* ── Form helpers ──────────────────────────── */
+  function setFieldError(id, msg) {
+    const input = document.getElementById(id);
+    const errEl = document.querySelector('.field-error[data-for="' + id + '"]');
+    if (input) input.classList.toggle('invalid', !!msg);
+    if (errEl) {
+      errEl.textContent = msg || '';
+      errEl.classList.toggle('show', !!msg);
+    }
+  }
+
+  function showFeedback(message, type) {
+    const fb = document.getElementById('formFeedback');
+    fb.textContent = message;
+    fb.className = 'form-feedback show ' + type;
+  }
+
+  function validateForm(payload) {
+    let firstInvalid = null;
+    const fail = (id, msg) => { setFieldError(id, msg); if (!firstInvalid) firstInvalid = id; };
+
+    ['fname', 'lname', 'email', 'phone', 'message'].forEach(id => setFieldError(id, ''));
+
+    if (!payload.firstName) fail('fname', 'First name is required.');
+    if (!payload.lastName)  fail('lname', 'Last name is required.');
+    if (!payload.email)     fail('email', 'Email address is required.');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) fail('email', 'Please enter a valid email address.');
+    if (payload.phone && !/^[\d\s\+\-\(\)]{7,20}$/.test(payload.phone)) fail('phone', 'Please enter a valid phone number.');
+    if (!payload.message)         fail('message', 'Message is required.');
+    else if (payload.message.length < 10) fail('message', 'Message must be at least 10 characters.');
+
+    return firstInvalid;
+  }
+
   /* ── Form submit ───────────────────────────── */
   async function handleSubmit(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  const payload = {
-    firstName: document.getElementById('fname').value,
-    lastName:  document.getElementById('lname').value,
-    email:     document.getElementById('email').value,
-    phone:     document.getElementById('phone').value,
-    service:   document.getElementById('service').value,
-    message:   document.getElementById('message').value,
-  };
+    const btn = document.getElementById('formSubmit');
+    const payload = {
+      firstName: document.getElementById('fname').value.trim(),
+      lastName:  document.getElementById('lname').value.trim(),
+      email:     document.getElementById('email').value.trim(),
+      phone:     document.getElementById('phone').value.trim(),
+      service:   document.getElementById('service').value,
+      message:   document.getElementById('message').value.trim(),
+    };
 
-  try {
-    const res  = await fetch('/api/contact', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload),
-    });
-    const data = await res.json();
-    const fb = document.getElementById('formFeedback');
-    fb.textContent = data.message;
-    fb.style.display = 'block';
-    if (res.ok) e.target.reset();
-  } catch {
-    const fb = document.getElementById('formFeedback');
-    fb.textContent = 'Network error. Please try again.';
-    fb.style.display = 'block';
+    const firstInvalid = validateForm(payload);
+    if (firstInvalid) {
+      showFeedback('Please correct the highlighted fields and try again.', 'error');
+      document.getElementById(firstInvalid).focus();
+      return;
+    }
+
+    btn.disabled = true;
+    const originalLabel = btn.textContent;
+    btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Sending…';
+
+    try {
+      const res  = await fetch('/api/contact', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        showFeedback(data.message || 'Your message has been sent. We will be in touch shortly.', 'success');
+        e.target.reset();
+      } else {
+        if (Array.isArray(data.errors)) {
+          const map = { firstName: 'fname', lastName: 'lname', email: 'email', phone: 'phone', message: 'message' };
+          data.errors.forEach(err => setFieldError(map[err.field] || err.field, err.message));
+        }
+        showFeedback(data.message || 'Something went wrong. Please try again.', 'error');
+      }
+    } catch {
+      showFeedback('Network error. Please check your connection or call us directly.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    }
   }
-}
 
   /* ── Active nav link ───────────────────────── */
   const sections = document.querySelectorAll('section[id]');
@@ -1166,6 +1740,164 @@
       a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
     });
   });
+
+  /* ── Back to top ───────────────────────────── */
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('show', window.scrollY > 600);
+  });
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ── FAQ accordion ─────────────────────────── */
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const answer = q.nextElementSibling;
+      const isOpen = q.getAttribute('aria-expanded') === 'true';
+      q.setAttribute('aria-expanded', String(!isOpen));
+      answer.classList.toggle('open', !isOpen);
+    });
+  });
+
+  /* ── Dynamic year & years-in-business ──────── */
+  (function () {
+    const now = new Date().getFullYear();
+    const years = now - 2008;
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set('footerYear', now);
+    set('yearsBadge', years);
+    const yearsStat = document.getElementById('yearsStat');
+    if (yearsStat) yearsStat.innerHTML = years + '<span>+</span>';
+    set('yearsCaption', years + '+');
+  })();
+
+  /* ── Chat assistant (self-contained, no external service) ──────────── */
+  (function () {
+    const panel   = document.getElementById('chatPanel');
+    const toggle  = document.getElementById('chatToggle');
+    const closeBtn= document.getElementById('chatClose');
+    const body    = document.getElementById('chatBody');
+    const form    = document.getElementById('chatForm');
+    const input   = document.getElementById('chatInput');
+    const quick   = document.getElementById('chatQuick');
+    if (!panel || !toggle) return;
+
+    let greeted = false;
+    const WA = 'https://wa.me/233244333374';
+
+    function addMsg(html, who) {
+      const el = document.createElement('div');
+      el.className = 'chat-msg ' + who;
+      el.innerHTML = html;
+      body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    const responses = {
+      hello:   'Hello! 👋 I\'m the G&amp;J virtual assistant. Ask me about <strong>quotes</strong>, <strong>services</strong>, <strong>contact details</strong>, <strong>business hours</strong> or <strong>tracking</strong>.',
+      quote:   'You can request a free quote with our form — tell us your cargo type, origin, destination and weight/volume. <a href="#contact" data-close>Open the quote form →</a><br/>Prefer to talk now? <a href="' + WA + '" target="_blank" rel="noopener">Message us on WhatsApp</a>.',
+      services:'We offer 6 core services: ✈️ Air &amp; Sea Freight, 🚢 Import &amp; Export, 🏭 Warehousing, 📦 Consolidation, 🚛 Haulage and 💼 Consultancy. <a href="#services" data-close>See all services →</a>',
+      contact: 'Reach us at:<br/>📞 +233 (0) 24 433 3374<br/>✉️ info@gandjfreightservices.com<br/>📍 Kpodo Plaza, Tema Comm 4, Accra – Ghana.<br/><a href="#contact" data-close>Go to contact →</a>',
+      hours:   'Our business hours:<br/>Mon – Fri: 8:00am – 5:00pm<br/>Sat: 9:00am – 1:00pm (GMT).<br/>Outside these hours, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a> and we\'ll reply soon.',
+      track:   'For shipment tracking, please share your booking reference with our operations team: 📞 +233 (0) 24 583 9831 or <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>.',
+      thanks:  'You\'re welcome! 😊 Is there anything else I can help you with?',
+      default: 'I\'m not certain about that, but our team can help directly. Call 📞 +233 (0) 24 433 3374, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>, or use the <a href="#contact" data-close>contact form</a>.'
+    };
+
+    function detect(text) {
+      const t = text.toLowerCase();
+      if (/(quote|price|pricing|cost|rate|estimate|charge)/.test(t)) return 'quote';
+      if (/(service|freight|ship|cargo|haulage|warehous|import|export|consolid|consult|air|sea)/.test(t)) return 'services';
+      if (/(contact|email|phone|call|address|location|where.*(you|office)|reach)/.test(t)) return 'contact';
+      if (/(hour|open|opening|time|when.*open)/.test(t)) return 'hours';
+      if (/(track|status|where is my|delivery|arrive|shipment)/.test(t)) return 'track';
+      if (/(thank|thanks|cheers|appreciate)/.test(t)) return 'thanks';
+      if (/(^|\b)(hi|hello|hey|good (morning|afternoon|evening))(\b|$)/.test(t)) return 'hello';
+      return 'default';
+    }
+
+    function botReply(key) {
+      setTimeout(() => addMsg(responses[key] || responses.default, 'bot'), 350);
+    }
+
+    function openChat() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      toggle.setAttribute('aria-expanded', 'true');
+      if (!greeted) { addMsg(responses.hello, 'bot'); greeted = true; }
+      setTimeout(() => input.focus(), 300);
+    }
+    function closeChat() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    toggle.addEventListener('click', () => panel.classList.contains('open') ? closeChat() : openChat());
+    closeBtn.addEventListener('click', closeChat);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && panel.classList.contains('open')) closeChat(); });
+
+    /* close the panel when a link inside a bot message is followed */
+    body.addEventListener('click', (e) => {
+      if (e.target.closest('a[data-close]')) closeChat();
+    });
+
+    quick.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-q]');
+      if (!btn) return;
+      addMsg(btn.textContent, 'user');
+      botReply(btn.dataset.q);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+      addMsg(text.replace(/</g, '&lt;'), 'user');
+      input.value = '';
+      botReply(detect(text));
+    });
+  })();
+</script>
+
+<!-- ═══ GOOGLE PAGE TRANSLATOR (free, 18 languages) ═══════════════════════ -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      // 18 major languages: global + West African (relevant to Ghana)
+      includedLanguages: 'en,fr,es,ar,zh-CN,pt,de,ru,ja,hi,it,tr,nl,sw,ha,yo,ig,ak',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- ═══ TAWK.TO LIVE CHAT (free live human chat — optional) ═══════════════
+  To activate real-time human chat:
+    1. Create a free account at https://www.tawk.to
+    2. Dashboard → Administration → Channels → Chat Widget
+    3. Copy your Property ID and Widget ID and paste them below,
+       replacing YOUR_TAWK_PROPERTY_ID and YOUR_TAWK_WIDGET_ID.
+    TIP: In the Tawk dashboard, set the widget position to BOTTOM-LEFT so it
+         doesn't overlap the assistant / WhatsApp buttons on the right.
+  Until real IDs are added, this stays inactive (the built-in 🤖 assistant works regardless).
+-->
+<script type="text/javascript">
+  var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+  (function () {
+    var TAWK_PROPERTY_ID = 'YOUR_TAWK_PROPERTY_ID';
+    var TAWK_WIDGET_ID   = 'YOUR_TAWK_WIDGET_ID';
+    if (TAWK_PROPERTY_ID.indexOf('YOUR_') === 0) return; // not configured yet — skip loading
+    var s1 = document.createElement('script'), s0 = document.getElementsByTagName('script')[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/' + TAWK_PROPERTY_ID + '/' + TAWK_WIDGET_ID;
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+  })();
 </script>
 
 </body>

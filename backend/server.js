@@ -18,6 +18,11 @@ const { globalLimiter } = require('./middleware/rateLimiter');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
+// Render (and most hosts) put the app behind a single reverse proxy.
+// Trusting the first proxy lets express-rate-limit and req.ip see the real
+// client IP from X-Forwarded-For instead of the proxy's address.
+app.set('trust proxy', 1);
+
 // ── Security headers ──────────────────────────────────────────────────────────
 app.use(helmet({
   contentSecurityPolicy: {

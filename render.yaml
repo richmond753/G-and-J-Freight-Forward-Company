@@ -1,0 +1,52 @@
+# Render Blueprint for G and J Freight Services
+# Docs: https://render.com/docs/blueprint-spec
+#
+# NOTE: An existing service created manually in the Render dashboard will NOT be
+# reconfigured by this file. Use it either as a reference for the env vars you
+# must set in the dashboard, or create a new "Blueprint" from this repo.
+#
+# Secrets / per-environment values are marked `sync: false` so they are NOT
+# stored in git — you set their values once in the Render dashboard.
+
+services:
+  - type: web
+    name: gandj-freight-services
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # ── SMTP / email (Nodemailer) ───────────────────────────────
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "465"
+      - key: SMTP_SECURE
+        value: "true"
+      - key: SMTP_USER          # e.g. gandjfreight23@gmail.com
+        sync: false
+      - key: SMTP_PASS          # NEW Gmail app password (rotate the old one!)
+        sync: false
+      - key: CONTACT_RECEIVER   # inbox that receives enquiries
+        sync: false
+
+      # ── CORS ────────────────────────────────────────────────────
+      # MUST include your live site origin, e.g. https://your-app.onrender.com
+      # (and your custom domain if any), comma-separated. The contact form
+      # will fail without this in production.
+      - key: ALLOWED_ORIGINS
+        sync: false
+
+      # ── Rate limiting ───────────────────────────────────────────
+      - key: RATE_LIMIT_WINDOW_MS
+        value: "900000"
+      - key: RATE_LIMIT_MAX
+        value: "100"
+
+    # Render provides PORT automatically — do not set it manually.

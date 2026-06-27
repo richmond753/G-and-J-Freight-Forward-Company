@@ -435,24 +435,45 @@
       background: rgba(201,162,39,0.15); margin-top: 3rem;
     }
     .service-card {
-      background: var(--navy2); padding: 3rem 2.5rem;
+      background: var(--navy2);
       position: relative; overflow: hidden;
       transition: background 0.4s;
       cursor: default;
+      display: flex; flex-direction: column;
     }
     .service-card::before {
-      content: ''; position: absolute; bottom: 0; left: 0;
+      content: ''; position: absolute; bottom: 0; left: 0; z-index: 3;
       width: 0; height: 3px; background: var(--gold);
       transition: width 0.5s;
     }
     .service-card:hover { background: rgba(21,36,56,0.9); }
     .service-card:hover::before { width: 100%; }
 
+    /* image header band */
+    .service-media { position: relative; height: 180px; overflow: hidden; }
+    .service-media img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease;
+    }
+    .service-card:hover .service-media img { transform: scale(1.08); }
+    .service-media::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,27,42,0.15) 0%, rgba(13,27,42,0.55) 60%, rgba(21,36,56,0.95) 100%);
+    }
+
+    /* gold hexagon icon badge bridging image and body */
     .service-icon {
-      font-size: 2rem; margin-bottom: 1.5rem; display: block;
+      position: absolute; left: 1.5rem; bottom: -22px; z-index: 2;
+      width: 48px; height: 48px; margin: 0;
+      background: var(--gold); color: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; line-height: 1;
+      clip-path: polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
       transition: transform 0.3s;
     }
-    .service-card:hover .service-icon { transform: scale(1.15); }
+    .service-card:hover .service-icon { transform: scale(1.12); }
+
+    .service-body { padding: 2.5rem 2.5rem 3rem; position: relative; }
 
     .service-card h3 {
       font-family: 'Barlow Condensed', sans-serif;
@@ -463,9 +484,9 @@
     .service-card p { font-size: var(--sm); color: var(--mist); line-height: 1.8; font-weight: 300; }
 
     .service-num {
-      position: absolute; top: 1.5rem; right: 2rem;
-      font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
-      color: rgba(201,162,39,0.05); line-height: 1; user-select: none;
+      position: absolute; top: 1.5rem; right: 1.75rem;
+      font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+      color: rgba(201,162,39,0.12); line-height: 1; user-select: none;
     }
 
     /* ─── WHY US ─────────────────────────────────────────────────────── */
@@ -960,7 +981,8 @@
   .vmv-card h3 { font-size: 1.5rem; }
   .values-grid { grid-template-columns: repeat(2,1fr); gap: 1rem; }
   .services-grid { grid-template-columns: 1fr; }
-  .service-card { padding: 2rem 1.5rem; }
+  .service-body { padding: 2rem 1.5rem 2.5rem; }
+  .service-media { height: 200px; }
   .process-grid { grid-template-columns: 1fr; }
   .contact-form-wrap { padding: 1.75rem 1.25rem; }
   .contact-map iframe { height: 220px; }
@@ -1207,40 +1229,70 @@
 
   <div class="services-grid">
     <div class="service-card reveal">
-      <span class="service-num">01</span>
-      <span class="service-icon" aria-hidden="true">✈️</span>
-      <h3>Air &amp; Sea Freight</h3>
-      <p>Full NVOCC and innovative Air and Sea freight services to local and international companies. Reliable, consistent international freight — every time.</p>
+      <div class="service-media">
+        <img src="/images/service-air-sea.jpg" alt="Cargo plane being loaded with air freight at dusk" loading="lazy" />
+        <span class="service-icon" aria-hidden="true">✈️</span>
+      </div>
+      <div class="service-body">
+        <span class="service-num">01</span>
+        <h3>Air &amp; Sea Freight</h3>
+        <p>Full NVOCC and innovative Air and Sea freight services to local and international companies. Reliable, consistent international freight — every time.</p>
+      </div>
     </div>
     <div class="service-card reveal" style="transition-delay:0.1s">
-      <span class="service-num">02</span>
-      <span class="service-icon" aria-hidden="true">🚢</span>
-      <h3>Import &amp; Export</h3>
-      <p>We provide comprehensive import and export services to local and international companies using the most price-effective methods available.</p>
+      <div class="service-media">
+        <img src="/images/service-import-export.jpg" alt="Container ship docked at a port with cranes" loading="lazy" />
+        <span class="service-icon" aria-hidden="true">🚢</span>
+      </div>
+      <div class="service-body">
+        <span class="service-num">02</span>
+        <h3>Import &amp; Export</h3>
+        <p>We provide comprehensive import and export services to local and international companies using the most price-effective methods available.</p>
+      </div>
     </div>
     <div class="service-card reveal" style="transition-delay:0.2s">
-      <span class="service-num">03</span>
-      <span class="service-icon" aria-hidden="true">🏭</span>
-      <h3>Warehousing</h3>
-      <p>Open space warehouse with a professional warehouse management system for your cargo, plus collateral management services.</p>
+      <div class="service-media">
+        <img src="/images/service-warehousing.jpg" alt="Modern warehouse interior with racking and a forklift" loading="lazy" />
+        <span class="service-icon" aria-hidden="true">🏭</span>
+      </div>
+      <div class="service-body">
+        <span class="service-num">03</span>
+        <h3>Warehousing</h3>
+        <p>Open space warehouse with a professional warehouse management system for your cargo, plus collateral management services.</p>
+      </div>
     </div>
     <div class="service-card reveal" style="transition-delay:0s">
-      <span class="service-num">04</span>
-      <span class="service-icon" aria-hidden="true">📦</span>
-      <h3>Consolidator</h3>
-      <p>Your trusted shipping partner. We consolidate, manage and deliver your cargo with precision and care — ensuring efficiency, affordability and peace of mind.</p>
+      <div class="service-media">
+        <img src="/images/service-consolidator.jpg" alt="Worker consolidating boxes and pallets in a distribution centre" loading="lazy" />
+        <span class="service-icon" aria-hidden="true">📦</span>
+      </div>
+      <div class="service-body">
+        <span class="service-num">04</span>
+        <h3>Consolidator</h3>
+        <p>Your trusted shipping partner. We consolidate, manage and deliver your cargo with precision and care — ensuring efficiency, affordability and peace of mind.</p>
+      </div>
     </div>
     <div class="service-card reveal" style="transition-delay:0.1s">
-      <span class="service-num">05</span>
-      <span class="service-icon" aria-hidden="true">🚛</span>
-      <h3>Haulage</h3>
-      <p>We manage the movement of your cargo from port to port, port to door, and door to door — with a fleet ready to serve Ghana and beyond.</p>
+      <div class="service-media">
+        <img src="/images/service-haulage.jpg" alt="Freight truck with container trailer on the highway" loading="lazy" />
+        <span class="service-icon" aria-hidden="true">🚛</span>
+      </div>
+      <div class="service-body">
+        <span class="service-num">05</span>
+        <h3>Haulage</h3>
+        <p>We manage the movement of your cargo from port to port, port to door, and door to door — with a fleet ready to serve Ghana and beyond.</p>
+      </div>
     </div>
     <div class="service-card reveal" style="transition-delay:0.2s">
-      <span class="service-num">06</span>
-      <span class="service-icon" aria-hidden="true">💼</span>
-      <h3>Consultancy</h3>
-      <p>Professional consulting in all areas of freight and forwarding. We give you the best and most detailed view across all your logistics requests.</p>
+      <div class="service-media">
+        <img src="/images/service-consultancy.jpg" alt="Logistics professionals reviewing plans with a port in the background" loading="lazy" />
+        <span class="service-icon" aria-hidden="true">💼</span>
+      </div>
+      <div class="service-body">
+        <span class="service-num">06</span>
+        <h3>Consultancy</h3>
+        <p>Professional consulting in all areas of freight and forwarding. We give you the best and most detailed view across all your logistics requests.</p>
+      </div>
     </div>
   </div>
 </section>

@@ -131,12 +131,15 @@ describe('GET /api/tracking', () => {
   });
 
   test('returns carrier links for unknown container-like id', async () => {
-    const res = await request(app).get('/api/tracking/live').query({ number: 'MSKU1234567' });
+    const res = await request(app)
+      .get('/api/tracking/live')
+      .query({ number: 'MSKU1234567' })
+      .timeout({ deadline: 15000 });
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
     expect(Array.isArray(res.body.links)).toBe(true);
     expect(res.body.links.length).toBeGreaterThan(0);
-  });
+  }, 20000);
 
   test('lists carriers', async () => {
     const res = await request(app).get('/api/tracking/carriers');

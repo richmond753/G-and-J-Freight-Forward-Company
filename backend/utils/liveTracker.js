@@ -16,7 +16,7 @@ const {
 } = require('./carriers');
 const { findShipment } = require('./shipmentsStore');
 
-const FETCH_TIMEOUT_MS = 12000;
+const FETCH_TIMEOUT_MS = 4000;
 
 async function fetchWithTimeout(url, options = {}) {
   const controller = new AbortController();
@@ -29,6 +29,9 @@ async function fetchWithTimeout(url, options = {}) {
 }
 
 async function tryMaerskPublic(container) {
+  // Without a consumer key, Maersk public endpoints usually hang/401 — skip to keep UX fast
+  if (!process.env.MAERSK_CONSUMER_KEY) return null;
+
   const urls = [
     `https://api.maersk.com/synergy/tracking/${encodeURIComponent(container)}`,
     `https://api.maersk.com/synergy/tracking/v2/events?containers=${encodeURIComponent(container)}`,
@@ -39,10 +42,8 @@ async function tryMaerskPublic(container) {
       const headers = {
         Accept: 'application/json',
         'User-Agent': 'G-and-J-Freight-Tracker/1.0',
+        'Consumer-Key': process.env.MAERSK_CONSUMER_KEY,
       };
-      if (process.env.MAERSK_CONSUMER_KEY) {
-        headers['Consumer-Key'] = process.env.MAERSK_CONSUMER_KEY;
-      }
       const res = await fetchWithTimeout(url, { headers });
       if (!res.ok) continue;
       const data = await res.json();
@@ -172,34 +173,34 @@ function normalizeShipsGo(container, carrier, info) {
  * Main entry: resolve a tracking / container number.
  */
 async function trackLive(rawNumber, carrierId) {
-  const number = normalizeContainerId(rawNumber);
-  const local = findShipment(number);
+  const raw = String(rawNumber || '').trim();
+  const containerId = normalizeContainerId(raw);
+  const container = isContainerNumber(raw);
+
+  // G&J booking refs must keep hyphens (e.g. GJ-2026-00142)
+  const local = findShipment(raw) || findShipment(raw.toUpperCase());
   if (local) {
     return {
       success: true,
       mode: 'local',
       data: { ...local, source: 'gandj', carrier: 'G and J Freight' },
       carriers: listCarriers(),
-      links: allCarrierLinks(number),
+      links: container ? allCarrierLinks(containerId) : [],
     };
   }
 
-  const detected = carrierId ? getCarrierById(carrierId) : detectCarrier(number);
-  const links = allCarrierLinks(number);
+  const detected = carrierId ? getCarrierById(carrierId) : detectCarrier(containerId);
+  const links = allCarrierLinks(containerId);
   const primaryLink = detected
-    ? { id: detected.id, name: detected.name, url: detected.trackUrl(number) }
+    ? { id: detected.id, name: detected.name, url: detected.trackUrl(containerId) }
     : null;
 
   let live = null;
-  if (isContainerNumber(number)) {
-    if (detected?.id === 'maersk' || carrierId === 'maersk') {
-      live = await tryMaerskPublic(number);
-    }
-    if (!live) {
-      live = await tryShipsGo(number, detected);
-    }
-    if (!live && (!detected || detected.id === 'maersk')) {
-      live = await tryMaerskPublic(number);
+  if (container) {
+    // Prefer ShipsGo when configured (multi-carrier). Keep public Maersk attempt short.
+    live = await tryShipsGo(containerId, detected);
+    if (!live && (detected?.id === 'maersk' || carrierId === 'maersk' || !detected)) {
+      live = await tryMaerskPublic(containerId);
     }
   }
 
@@ -215,18 +216,17 @@ async function trackLive(rawNumber, carrierId) {
     };
   }
 
-  // No live payload — still return actionable carrier tracking links
   return {
     success: true,
     mode: 'carrier-links',
-    message: isContainerNumber(number)
+    message: container
       ? detected
-        ? `Detected ${detected.name}. Open live tracking on the carrier site, or connect ShipsGo (SHIPSGO_AUTH_CODE) for in-app milestones.`
+        ? `Detected ${detected.name}. Open live tracking on the carrier site below. For in-app milestones, add SHIPSGO_AUTH_CODE in environment.`
         : 'Container number recognised. Choose a shipping line or open a carrier tracker below.'
-      : 'No G&J booking found. If this is a container number (4 letters + 7 digits), select a shipping line to track live on the carrier site.',
+      : 'No G&J booking found. If this is a container number (4 letters + 7 digits), select a shipping line to track on the carrier site.',
     data: {
       source: 'links',
-      trackingNumber: number,
+      trackingNumber: container ? containerId : raw.toUpperCase(),
       status: 'Open on carrier',
       mode: 'Sea freight',
       carrier: detected?.name || 'Select carrier',
@@ -244,7 +244,7 @@ async function trackLive(rawNumber, carrierId) {
       ? [primaryLink, ...links.filter((l) => l.id !== detected.id)]
       : links,
     carriers: listCarriers(),
-    isContainer: isContainerNumber(number),
+    isContainer: container,
   };
 }
 

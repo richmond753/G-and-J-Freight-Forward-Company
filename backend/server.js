@@ -134,6 +134,7 @@ app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.use('/api', apiRouter);
 app.use('/api/contact', contactRouter);
 app.use('/api/tracking', trackingRouter);
+app.use('/api/alerts', require('./routes/alerts'));
 app.use('/api/admin', adminRouter);
 app.use('/api/portal', portalRouter);
 

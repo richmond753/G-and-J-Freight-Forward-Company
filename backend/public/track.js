@@ -4,10 +4,12 @@
   const carrierSelect = document.getElementById('carrierSelect');
   const feedback = document.getElementById('trackFeedback');
   const result = document.getElementById('trackResult');
+  const alertForm = document.getElementById('alertForm');
+  const alertFeedback = document.getElementById('alertFeedback');
 
-  function showFeedback(message, type) {
-    feedback.textContent = message;
-    feedback.className = 'form-feedback show ' + (type || '');
+  function showFeedback(el, message, type) {
+    el.textContent = message;
+    el.className = 'form-feedback show ' + (type || '');
   }
 
   function escapeHtml(str) {
@@ -116,12 +118,12 @@
     e.preventDefault();
     const number = input.value.trim();
     if (!number) {
-      showFeedback('Enter a tracking or container number.', 'error');
+      showFeedback(feedback, 'Enter a tracking or container number.', 'error');
       input.focus();
       return;
     }
 
-    showFeedback('Looking up shipment across G&J and ocean carriers…', '');
+    showFeedback(feedback, 'Looking up shipment across G&J and ocean carriers…', '');
     result.hidden = true;
 
     const carrier = carrierSelect.value;
@@ -132,13 +134,55 @@
       const res = await fetch('/api/tracking/live?' + qs.toString());
       const data = await res.json();
       if (!res.ok || !data.success) {
-        showFeedback(data.message || 'Shipment not found.', 'error');
+        showFeedback(feedback, data.message || 'Shipment not found.', 'error');
         return;
       }
-      showFeedback(data.message || 'Tracking result ready.', data.mode === 'carrier-links' ? '' : 'success');
+      showFeedback(
+        feedback,
+        data.message || 'Tracking result ready.',
+        data.mode === 'carrier-links' ? '' : 'success'
+      );
       renderShipment(data);
     } catch {
-      showFeedback('Network error. Please try again.', 'error');
+      showFeedback(feedback, 'Network error. Please try again.', 'error');
+    }
+  });
+
+  alertForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const trackingNumber = input.value.trim();
+    const email = document.getElementById('alertEmail').value.trim();
+    const phone = document.getElementById('alertPhone').value.trim();
+    if (!trackingNumber) {
+      showFeedback(alertFeedback, 'Enter a tracking number above first.', 'error');
+      input.focus();
+      return;
+    }
+    if (!email) {
+      showFeedback(alertFeedback, 'Email is required for alerts.', 'error');
+      return;
+    }
+
+    showFeedback(alertFeedback, 'Enabling alerts…', '');
+    try {
+      const res = await fetch('/api/alerts/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          trackingNumber,
+          email,
+          phone,
+          carrier: carrierSelect.value || '',
+        }),
+      });
+      const data = await res.json();
+      showFeedback(
+        alertFeedback,
+        data.message || (res.ok ? 'Alerts enabled.' : 'Could not enable alerts.'),
+        res.ok ? 'success' : 'error'
+      );
+    } catch {
+      showFeedback(alertFeedback, 'Network error. Please try again.', 'error');
     }
   });
 

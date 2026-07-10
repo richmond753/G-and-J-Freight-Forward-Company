@@ -26,10 +26,10 @@
     </nav>
   </header>
 
-  <main id="main" class="app-main">
+  <main id="main" class="app-main app-main--wide">
     <p class="section-label">Internal</p>
     <h1 class="section-title">Lead <em>inbox</em></h1>
-    <p class="app-lead">Authenticate with your admin token to review website enquiries.</p>
+    <p class="app-lead">Authenticate with your admin token to review website enquiries, assign owners, and run shipment alert checks.</p>
 
     <form id="loginForm" class="track-form">
       <label for="adminToken">Admin token</label>
@@ -42,6 +42,12 @@
 
     <div id="crmPanel" hidden>
       <div id="crmStats" class="crm-stats"></div>
+
+      <section id="remindersPanel" class="reminders-panel" aria-labelledby="remindersHeading" hidden>
+        <h2 id="remindersHeading" class="section-label">Follow-up reminders</h2>
+        <ul id="remindersList" class="reminders-list"></ul>
+      </section>
+
       <div class="crm-toolbar">
         <label for="statusFilter">Status</label>
         <select id="statusFilter">
@@ -54,6 +60,7 @@
           <option value="archived">Archived</option>
         </select>
         <button type="button" id="refreshLeads" class="btn-outline">Refresh</button>
+        <button type="button" id="runAlertCheck" class="btn-outline">Run alert check</button>
       </div>
       <div id="leadsTable" class="leads-table" role="region" aria-label="Leads"></div>
     </div>

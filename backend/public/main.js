@@ -159,7 +159,33 @@ async function handleSubmit(e) {
   }
 }
 
-refreshCaptcha();
+.refreshCaptcha();
+
+/* ── WhatsApp quote shortcut ─────────────────── */
+(function () {
+  const btn = document.getElementById('whatsappQuoteBtn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const parts = [
+      'Hello G and J Freight, I would like a quote.',
+      '',
+      'Name: ' + (document.getElementById('fname')?.value || '') + ' ' + (document.getElementById('lname')?.value || ''),
+      'Email: ' + (document.getElementById('email')?.value || ''),
+      'Phone: ' + (document.getElementById('phone')?.value || ''),
+      'Service: ' + (document.getElementById('service')?.value || ''),
+      'Origin: ' + (document.getElementById('origin')?.value || ''),
+      'Destination: ' + (document.getElementById('destination')?.value || ''),
+      'Mode: ' + (document.getElementById('mode')?.value || ''),
+      'Cargo: ' + (document.getElementById('cargoType')?.value || ''),
+      'Weight (kg): ' + (document.getElementById('weightKg')?.value || ''),
+      'Volume (CBM): ' + (document.getElementById('volumeCbm')?.value || ''),
+      'Message: ' + (document.getElementById('message')?.value || ''),
+    ];
+    const text = parts.join('\n').trim();
+    const url = 'https://wa.me/233244333374?text=' + encodeURIComponent(text);
+    window.open(url, '_blank', 'noopener');
+  });
+})();
 
 /* ── Active nav link ───────────────────────── */
 const sections = document.querySelectorAll('section[id]');

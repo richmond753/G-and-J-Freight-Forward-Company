@@ -212,72 +212,11 @@
   text-transform: uppercase;
 }
 
-.leads-table select,
-.leads-table .lead-assign,
-.leads-table .lead-notes {
+.leads-table select {
   background: var(--navy);
   color: var(--text);
   border: 1px solid rgba(201, 162, 39, 0.3);
   padding: 0.35rem;
-  width: 100%;
-  min-width: 7rem;
-  font: inherit;
-}
-
-.leads-table .lead-notes {
-  min-width: 10rem;
-  resize: vertical;
-}
-
-.lead-muted {
-  color: var(--mist);
-  font-size: 0.8rem;
-}
-
-.lead-message {
-  max-width: 180px;
-}
-
-.app-main--wide {
-  max-width: 1200px;
-}
-
-.reminders-panel {
-  margin-bottom: 1.5rem;
-  padding: 1rem 0;
-  border-top: 1px solid rgba(201, 162, 39, 0.15);
-}
-
-.reminders-list {
-  list-style: none;
-  margin: 0.75rem 0 0;
-  padding: 0;
-  display: grid;
-  gap: 0.5rem;
-}
-
-.reminder-item {
-  padding: 0.65rem 0.85rem;
-  background: var(--navy2);
-  border-left: 3px solid rgba(201, 162, 39, 0.45);
-  font-size: 0.9rem;
-}
-
-.reminder-item--overdue {
-  border-left-color: #c45c26;
-}
-
-.reminder-meta {
-  display: block;
-  margin-top: 0.25rem;
-  color: var(--mist);
-  font-size: 0.8rem;
-}
-
-.alert-box {
-  margin-top: 2rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid rgba(201, 162, 39, 0.2);
 }
 
 @media (max-width: 640px) {

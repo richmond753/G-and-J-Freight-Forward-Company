@@ -46,40 +46,11 @@ router.get('/stats', (req, res) => {
     acc[l.status] = (acc[l.status] || 0) + 1;
     return acc;
   }, {});
-
-  const now = Date.now();
-  const reminders = leads
-    .filter((l) => l.status === 'new' || l.status === 'quoted')
-    .map((l) => {
-      const ageHours = Math.round((now - new Date(l.createdAt).getTime()) / 3600000);
-      const overdue =
-        (l.status === 'new' && ageHours >= 24) ||
-        (l.status === 'quoted' && ageHours >= 72);
-      return {
-        id: l.id,
-        name: `${l.firstName} ${l.lastName}`,
-        status: l.status,
-        assignedTo: l.assignedTo || '',
-        ageHours,
-        overdue,
-        hint:
-          l.status === 'new'
-            ? ageHours >= 24
-              ? 'Follow up — new lead over 24h'
-              : 'New lead'
-            : ageHours >= 72
-              ? 'Chase quote — over 72h'
-              : 'Quoted — awaiting decision',
-      };
-    })
-    .sort((a, b) => Number(b.overdue) - Number(a.overdue) || b.ageHours - a.ageHours);
-
   res.status(200).json({
     success: true,
     data: {
       total: leads.length,
       byStatus,
-      reminders,
       latest: leads.slice(0, 5).map((l) => ({
         id: l.id,
         name: `${l.firstName} ${l.lastName}`,

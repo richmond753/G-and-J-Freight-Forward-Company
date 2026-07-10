@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Documents | G and J Freight Services</title>
+  <meta name="description" content="Upload bill of lading, commercial invoice, packing list and other trade documents to G and J Freight." />
+  <meta name="theme-color" content="#0d1b2a" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/app-pages.css" />
+</head>
+<body class="app-page">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="app-header">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">G&amp;J</div>
+      <div class="nav-logo-text">
+        <span>G and J</span>
+        <span>Freight Services</span>
+      </div>
+    </a>
+    <nav class="app-nav" aria-label="Secondary">
+      <a href="/">Home</a>
+      <a href="/portal.html">Portal</a>
+      <a href="/docs.html" aria-current="page">Documents</a>
+      <a href="/account.html">Account</a>
+    </nav>
+  </header>
+
+  <main id="main" class="app-main">
+    <p class="section-label">Document vault</p>
+    <h1 class="section-title">Upload <em>trade docs</em></h1>
+    <p class="app-lead">Send your bill of lading, commercial invoice, packing list, or related files. Our team reviews uploads against your shipment reference.</p>
+
+    <form id="uploadForm" class="track-form app-panel" enctype="multipart/form-data">
+      <label for="trackingNumber">Tracking / booking reference *</label>
+      <input id="trackingNumber" name="trackingNumber" type="text" required maxlength="40" placeholder="GJ-2026-00142" autocomplete="off" />
+
+      <label for="email" style="margin-top:0.75rem">Your email *</label>
+      <input id="email" name="email" type="email" required placeholder="you@company.com" autocomplete="email" />
+
+      <label for="docType" style="margin-top:0.75rem">Document type *</label>
+      <select id="docType" name="docType" required>
+        <option value="">Select type…</option>
+      </select>
+
+      <label for="file" style="margin-top:0.75rem">File * (PDF, JPG, PNG, DOC — max 8MB)</label>
+      <input id="file" name="file" type="file" required accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" />
+
+      <label for="note" style="margin-top:0.75rem">Note (optional)</label>
+      <textarea id="note" name="note" rows="2" maxlength="300" placeholder="Container number, vessel, or special instruction"></textarea>
+
+      <div class="track-row" style="margin-top:1rem">
+        <button type="submit" class="form-submit">Upload document</button>
+      </div>
+      <p class="form-note">Files are stored securely for operations review. Do not upload passwords or payment card details.</p>
+    </form>
+
+    <div id="uploadFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+
+    <section class="app-panel" style="margin-top:2rem" aria-labelledby="listHeading">
+      <h2 id="listHeading" class="portal-card-title">Look up uploaded docs</h2>
+      <form id="listForm" class="track-form">
+        <label for="listTracking">Tracking number</label>
+        <div class="track-row">
+          <input id="listTracking" type="text" placeholder="GJ-2026-00142" />
+          <button type="submit" class="btn-outline">List</button>
+        </div>
+      </form>
+      <ul id="docsList" class="docs-list"></ul>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p><a href="/portal.html">← Customer portal</a> · <a href="/">Home</a></p>
+  </footer>
+  <script src="/docs.js" defer></script>
+</body>
+</html>

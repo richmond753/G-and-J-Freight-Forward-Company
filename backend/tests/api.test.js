@@ -214,3 +214,88 @@ describe('CORS', () => {
     expect(res.headers['access-control-allow-origin']).toBe('http://localhost:4000');
   });
 });
+
+describe('Customer account', () => {
+  test('demo login returns token and quotes', async () => {
+    const login = await request(app)
+      .post('/api/account/login')
+      .send({ email: 'demo@gandjfreight.com', password: 'Demo1234!' });
+    expect(login.status).toBe(200);
+    expect(login.body.token).toBeTruthy();
+
+    const quotes = await request(app)
+      .get('/api/account/quotes')
+      .set('Authorization', 'Bearer ' + login.body.token);
+    expect(quotes.status).toBe(200);
+    expect(Array.isArray(quotes.body.data)).toBe(true);
+    expect(quotes.body.data.length).toBeGreaterThan(0);
+
+    const ships = await request(app)
+      .get('/api/account/shipments')
+      .set('Authorization', 'Bearer ' + login.body.token);
+    expect(ships.status).toBe(200);
+    expect(ships.body.data.length).toBeGreaterThan(0);
+  });
+});
+
+describe('Haulage', () => {
+  test('returns demo trip', async () => {
+    const res = await request(app).get('/api/haulage/TRIP-TEMA-001');
+    expect(res.status).toBe(200);
+    expect(res.body.data.id).toBe('TRIP-TEMA-001');
+  });
+
+  test('driver update requires pin', async () => {
+    const res = await request(app)
+      .post('/api/haulage/update')
+      .send({ tripId: 'TRIP-TEMA-001', status: 'delivered', pin: 'wrong' });
+    expect(res.status).toBe(401);
+  });
+
+  test('driver update with admin token pin works', async () => {
+    const res = await request(app)
+      .post('/api/haulage/update')
+      .send({
+        tripId: 'TRIP-TEMA-001',
+        status: 'in_transit',
+        pin: 'test-admin-token',
+        note: 'Test update',
+      });
+    expect(res.status).toBe(200);
+    expect(res.body.data.status).toBe('in_transit');
+  });
+});
+
+describe('Documents', () => {
+  test('lists document types', async () => {
+    const res = await request(app).get('/api/documents/types');
+    expect(res.status).toBe(200);
+    expect(res.body.data.some((t) => t.id === 'bill_of_lading')).toBe(true);
+  });
+
+  test('upload accepts a pdf', async () => {
+    const res = await request(app)
+      .post('/api/documents/upload')
+      .field('trackingNumber', 'GJ-TEST-UPLOAD')
+      .field('email', 'shipper@example.com')
+      .field('docType', 'packing_list')
+      .attach('file', Buffer.from('%PDF-1.4 test'), 'packing.pdf');
+    expect(res.status).toBe(201);
+    expect(res.body.data.id).toMatch(/^DOC-/);
+  });
+});
+
+describe('New app pages', () => {
+  test('serves docs, haulage, account, guides', async () => {
+    for (const path of [
+      '/docs.html',
+      '/haulage.html',
+      '/account.html',
+      '/guides.html',
+      '/guides/fcl-vs-lcl.html',
+    ]) {
+      const res = await request(app).get(path);
+      expect(res.status).toBe(200);
+    }
+  });
+});

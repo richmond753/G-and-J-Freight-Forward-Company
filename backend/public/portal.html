@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Customer Portal | G and J Freight Services</title>
-  <meta name="description" content="Documents, payments, and carrier status for G and J Freight customers." />
+  <meta name="description" content="Documents, haulage status, account, payments, and carrier tools for G and J Freight customers." />
   <meta name="theme-color" content="#0d1b2a" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
@@ -24,18 +24,41 @@
       <a href="/">Home</a>
       <a href="/track.html">Track</a>
       <a href="/portal.html" aria-current="page">Portal</a>
-      <a href="/#contact">Get a Quote</a>
+      <a href="/account.html">Account</a>
     </nav>
   </header>
 
   <main id="main" class="app-main">
     <p class="section-label">Customer tools</p>
-    <h1 class="section-title">Portal <em>preview</em></h1>
-    <p class="app-lead">Document vault, payment methods, and carrier integrations — ready to connect to live providers.</p>
+    <h1 class="section-title">Portal <em>hub</em></h1>
+    <p class="app-lead">Upload documents, check haulage, sign in for quotes and shipments, or use payment and carrier scaffolds.</p>
+
+    <div class="guides-grid" style="margin-bottom:2rem">
+      <a class="guide-card" href="/docs.html">
+        <span class="section-label">Documents</span>
+        <h2>Upload trade docs</h2>
+        <p>BL, invoice, packing list, and more.</p>
+      </a>
+      <a class="guide-card" href="/haulage.html">
+        <span class="section-label">Haulage</span>
+        <h2>Driver status</h2>
+        <p>Look up trips and post road updates.</p>
+      </a>
+      <a class="guide-card" href="/account.html">
+        <span class="section-label">Account</span>
+        <h2>Quotes &amp; shipments</h2>
+        <p>Log in to see saved quotes and history.</p>
+      </a>
+      <a class="guide-card" href="/guides.html">
+        <span class="section-label">Guides</span>
+        <h2>Freight know-how</h2>
+        <p>Port clearance, FCL vs LCL, HS codes.</p>
+      </a>
+    </div>
 
     <section class="portal-grid">
-      <article class="portal-card">
-        <h2>Document vault</h2>
+      <article class="portal-card app-panel">
+        <h2>Document vault lookup</h2>
         <form id="docsForm" class="track-form">
           <label for="docsTracking">Tracking number</label>
           <div class="track-row">
@@ -44,15 +67,16 @@
           </div>
         </form>
         <ul id="docsList" class="docs-list"></ul>
+        <p class="form-note"><a href="/docs.html" style="color:var(--gold)">Go to full upload page →</a></p>
       </article>
 
-      <article class="portal-card">
+      <article class="portal-card app-panel">
         <h2>Payments</h2>
         <div id="payMethods" class="docs-list">Loading…</div>
         <p class="form-note">Online capture returns 501 until Paystack / MoMo credentials are wired.</p>
       </article>
 
-      <article class="portal-card">
+      <article class="portal-card app-panel">
         <h2>Carrier feeds</h2>
         <div id="carrierStatus" class="docs-list">Loading…</div>
       </article>

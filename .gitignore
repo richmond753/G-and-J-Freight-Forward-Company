@@ -10,6 +10,10 @@ node_modules/
 backend/data/*
 !backend/data/.gitkeep
 
+# Uploaded customer documents
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 # Logs
 *.log
 npm-debug.log*

@@ -219,6 +219,130 @@
   padding: 0.35rem;
 }
 
+.app-panel {
+  background: var(--navy2);
+  border: 1px solid rgba(201, 162, 39, 0.18);
+  padding: 1.25rem 1.35rem;
+}
+
+.portal-card-title,
+.guide-card h2 {
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin: 0.35rem 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.guides-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.guide-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--navy2);
+  border: 1px solid rgba(201, 162, 39, 0.2);
+  padding: 1.25rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.guide-card:hover {
+  border-color: rgba(201, 162, 39, 0.55);
+  transform: translateY(-2px);
+}
+
+.guide-card p {
+  color: var(--mist);
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.guide-body {
+  color: var(--mist);
+  line-height: 1.7;
+  max-width: 42rem;
+}
+
+.guide-body h2 {
+  color: var(--white);
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 1.15rem;
+  margin: 1.75rem 0 0.6rem;
+}
+
+.guide-body a {
+  color: var(--gold);
+}
+
+.guide-body ul {
+  padding-left: 1.2rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.guide-cta {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(201, 162, 39, 0.2);
+}
+
+.account-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.account-tab {
+  background: transparent;
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  color: var(--mist);
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.account-tab.is-active {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.trip-result {
+  margin-top: 1.25rem;
+}
+
+.trip-id {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.06em;
+  font-size: 1.6rem;
+  color: var(--white);
+  margin: 0.5rem 0;
+}
+
+.lead-muted {
+  color: var(--mist);
+  font-size: 0.8rem;
+}
+
+.track-form input[type="file"],
+.track-form textarea {
+  width: 100%;
+  background: var(--navy);
+  color: var(--text);
+  border: 1px solid rgba(201, 162, 39, 0.3);
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+}
+
 @media (max-width: 640px) {
   .app-header {
     flex-direction: column;

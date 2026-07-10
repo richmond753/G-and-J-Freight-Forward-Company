@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haulage Status | G and J Freight Services</title>
+  <meta name="description" content="Track driver and haulage trip status for G and J Freight road deliveries." />
+  <meta name="theme-color" content="#0d1b2a" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/app-pages.css" />
+</head>
+<body class="app-page">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="app-header">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">G&amp;J</div>
+      <div class="nav-logo-text">
+        <span>G and J</span>
+        <span>Freight Services</span>
+      </div>
+    </a>
+    <nav class="app-nav" aria-label="Secondary">
+      <a href="/">Home</a>
+      <a href="/track.html">Track</a>
+      <a href="/haulage.html" aria-current="page">Haulage</a>
+      <a href="/portal.html">Portal</a>
+    </nav>
+  </header>
+
+  <main id="main" class="app-main">
+    <p class="section-label">Road logistics</p>
+    <h1 class="section-title">Haulage <em>status</em></h1>
+    <p class="app-lead">Customers can look up a trip. Drivers update status with the operations PIN.</p>
+
+    <section class="app-panel" aria-labelledby="lookupHeading">
+      <h2 id="lookupHeading" class="portal-card-title">Look up a trip</h2>
+      <form id="lookupForm" class="track-form">
+        <label for="tripId">Trip ID</label>
+        <div class="track-row">
+          <input id="tripId" type="text" required placeholder="TRIP-TEMA-001" autocomplete="off" />
+          <button type="submit" class="form-submit">Check status</button>
+        </div>
+        <p class="form-note">Demo trip: TRIP-TEMA-001</p>
+      </form>
+      <div id="tripResult" class="trip-result" hidden></div>
+    </section>
+
+    <section class="app-panel" style="margin-top:2rem" aria-labelledby="driverHeading">
+      <h2 id="driverHeading" class="portal-card-title">Driver update</h2>
+      <form id="updateForm" class="track-form">
+        <label for="updTripId">Trip ID *</label>
+        <input id="updTripId" type="text" required maxlength="40" placeholder="TRIP-TEMA-001" />
+
+        <label for="status" style="margin-top:0.75rem">Status *</label>
+        <select id="status" required>
+          <option value="">Select…</option>
+        </select>
+
+        <label for="driverName" style="margin-top:0.75rem">Driver name</label>
+        <input id="driverName" type="text" maxlength="80" placeholder="Your name" />
+
+        <label for="note" style="margin-top:0.75rem">Note</label>
+        <input id="note" type="text" maxlength="500" placeholder="Location or delay reason" />
+
+        <label for="pin" style="margin-top:0.75rem">Driver PIN *</label>
+        <input id="pin" type="password" required autocomplete="current-password" placeholder="HAULAGE_PIN from operations" />
+
+        <div class="track-row" style="margin-top:1rem">
+          <button type="submit" class="form-submit">Post update</button>
+        </div>
+      </form>
+      <div id="updateFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p><a href="/portal.html">← Customer portal</a> · <a href="/">Home</a></p>
+  </footer>
+  <script src="/haulage.js" defer></script>
+</body>
+</html>

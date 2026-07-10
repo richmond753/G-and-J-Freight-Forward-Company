@@ -16,6 +16,9 @@ const contactRouter = require('./routes/contact');
 const trackingRouter = require('./routes/tracking');
 const adminRouter = require('./routes/admin');
 const portalRouter = require('./routes/portal');
+const documentsRouter = require('./routes/documents');
+const haulageRouter = require('./routes/haulage');
+const accountRouter = require('./routes/account');
 const { globalLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
@@ -136,6 +139,9 @@ app.use('/api/contact', contactRouter);
 app.use('/api/tracking', trackingRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/portal', portalRouter);
+app.use('/api/documents', documentsRouter);
+app.use('/api/haulage', haulageRouter);
+app.use('/api/account', accountRouter);
 
 // Explicit HTML pages (avoid SPA catch-all masking missing assets)
 const pages = {
@@ -147,6 +153,20 @@ const pages = {
   '/admin.html': 'admin.html',
   '/portal': 'portal.html',
   '/portal.html': 'portal.html',
+  '/docs': 'docs.html',
+  '/docs.html': 'docs.html',
+  '/haulage': 'haulage.html',
+  '/haulage.html': 'haulage.html',
+  '/account': 'account.html',
+  '/account.html': 'account.html',
+  '/guides': 'guides.html',
+  '/guides.html': 'guides.html',
+  '/guides/clear-cargo-port': 'guides/clear-cargo-port.html',
+  '/guides/clear-cargo-port.html': 'guides/clear-cargo-port.html',
+  '/guides/fcl-vs-lcl': 'guides/fcl-vs-lcl.html',
+  '/guides/fcl-vs-lcl.html': 'guides/fcl-vs-lcl.html',
+  '/guides/hs-code-basics': 'guides/hs-code-basics.html',
+  '/guides/hs-code-basics.html': 'guides/hs-code-basics.html',
 };
 
 Object.entries(pages).forEach(([route, file]) => {

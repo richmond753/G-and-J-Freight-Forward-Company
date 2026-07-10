@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Account | G and J Freight Services</title>
+  <meta name="description" content="Log in to view saved quotes and past shipments with G and J Freight." />
+  <meta name="theme-color" content="#0d1b2a" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/app-pages.css" />
+</head>
+<body class="app-page">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="app-header">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">G&amp;J</div>
+      <div class="nav-logo-text">
+        <span>G and J</span>
+        <span>Freight Services</span>
+      </div>
+    </a>
+    <nav class="app-nav" aria-label="Secondary">
+      <a href="/">Home</a>
+      <a href="/portal.html">Portal</a>
+      <a href="/account.html" aria-current="page">Account</a>
+      <a href="/#contact">Get a Quote</a>
+    </nav>
+  </header>
+
+  <main id="main" class="app-main">
+    <p class="section-label">Customer access</p>
+    <h1 class="section-title">Your <em>account</em></h1>
+    <p class="app-lead">Sign in to see saved quotes and past shipments. Demo: demo@gandjfreight.com / Demo1234!</p>
+
+    <div id="authPanel" class="app-panel">
+      <div class="account-tabs" role="tablist">
+        <button type="button" class="account-tab is-active" data-tab="login" role="tab" aria-selected="true">Log in</button>
+        <button type="button" class="account-tab" data-tab="register" role="tab" aria-selected="false">Register</button>
+      </div>
+
+      <form id="loginForm" class="track-form" data-panel="login">
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" type="email" required autocomplete="username" />
+        <label for="loginPassword" style="margin-top:0.75rem">Password</label>
+        <input id="loginPassword" type="password" required minlength="6" autocomplete="current-password" />
+        <div class="track-row" style="margin-top:1rem">
+          <button type="submit" class="form-submit">Log in</button>
+        </div>
+      </form>
+
+      <form id="registerForm" class="track-form" data-panel="register" hidden>
+        <label for="regName">Full name</label>
+        <input id="regName" type="text" required maxlength="80" autocomplete="name" />
+        <label for="regCompany" style="margin-top:0.75rem">Company</label>
+        <input id="regCompany" type="text" maxlength="80" autocomplete="organization" />
+        <label for="regEmail" style="margin-top:0.75rem">Email</label>
+        <input id="regEmail" type="email" required autocomplete="email" />
+        <label for="regPassword" style="margin-top:0.75rem">Password (min 8)</label>
+        <input id="regPassword" type="password" required minlength="8" autocomplete="new-password" />
+        <div class="track-row" style="margin-top:1rem">
+          <button type="submit" class="form-submit">Create account</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="dashPanel" hidden>
+      <div class="crm-toolbar">
+        <p id="welcomeLine" class="app-lead" style="margin:0"></p>
+        <button type="button" id="logoutBtn" class="btn-outline">Sign out</button>
+      </div>
+
+      <section class="app-panel" aria-labelledby="quotesHeading">
+        <h2 id="quotesHeading" class="portal-card-title">Saved quotes</h2>
+        <ul id="quotesList" class="docs-list"></ul>
+      </section>
+
+      <section class="app-panel" style="margin-top:1.25rem" aria-labelledby="shipHeading">
+        <h2 id="shipHeading" class="portal-card-title">Past shipments</h2>
+        <ul id="shipmentsList" class="docs-list"></ul>
+      </section>
+    </div>
+
+    <div id="accountFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+  </main>
+
+  <footer class="app-footer">
+    <p><a href="/docs.html">Upload documents</a> · <a href="/">Home</a></p>
+  </footer>
+  <script src="/account.js" defer></script>
+</body>
+</html>

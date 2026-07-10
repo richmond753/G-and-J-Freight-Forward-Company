@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staff CRM | G and J Freight Services</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#0d1b2a" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/app-pages.css" />
+</head>
+<body class="app-page">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="app-header">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">G&amp;J</div>
+      <div class="nav-logo-text">
+        <span>G and J</span>
+        <span>Staff CRM</span>
+      </div>
+    </a>
+    <nav class="app-nav" aria-label="Secondary">
+      <a href="/">Site</a>
+      <a href="/admin.html" aria-current="page">Leads</a>
+    </nav>
+  </header>
+
+  <main id="main" class="app-main">
+    <p class="section-label">Internal</p>
+    <h1 class="section-title">Lead <em>inbox</em></h1>
+    <p class="app-lead">Authenticate with your admin token to review website enquiries.</p>
+
+    <form id="loginForm" class="track-form">
+      <label for="adminToken">Admin token</label>
+      <div class="track-row">
+        <input id="adminToken" type="password" autocomplete="current-password" required placeholder="ADMIN_TOKEN from .env" />
+        <button type="submit" class="form-submit">Unlock</button>
+      </div>
+      <p class="form-note">Token is stored only in this browser session (sessionStorage).</p>
+    </form>
+
+    <div id="crmPanel" hidden>
+      <div id="crmStats" class="crm-stats"></div>
+      <div class="crm-toolbar">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="">All</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="quoted">Quoted</option>
+          <option value="won">Won</option>
+          <option value="lost">Lost</option>
+          <option value="archived">Archived</option>
+        </select>
+        <button type="button" id="refreshLeads" class="btn-outline">Refresh</button>
+      </div>
+      <div id="leadsTable" class="leads-table" role="region" aria-label="Leads"></div>
+    </div>
+    <div id="crmFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+  </main>
+
+  <script src="/admin.js" defer></script>
+</body>
+</html>

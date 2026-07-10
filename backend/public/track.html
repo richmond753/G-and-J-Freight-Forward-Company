@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track Shipment | G and J Freight Services</title>
+  <meta name="description" content="Track your G and J Freight shipment by booking reference." />
+  <meta name="theme-color" content="#0d1b2a" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/app-pages.css" />
+</head>
+<body class="app-page">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="app-header">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">G&amp;J</div>
+      <div class="nav-logo-text">
+        <span>G and J</span>
+        <span>Freight Services</span>
+      </div>
+    </a>
+    <nav class="app-nav" aria-label="Secondary">
+      <a href="/">Home</a>
+      <a href="/track.html" aria-current="page">Track</a>
+      <a href="/portal.html">Portal</a>
+      <a href="/#contact">Get a Quote</a>
+    </nav>
+  </header>
+
+  <main id="main" class="app-main">
+    <p class="section-label">Shipment visibility</p>
+    <h1 class="section-title">Track your <em>cargo</em></h1>
+    <p class="app-lead">Enter your G&amp;J tracking number to see live milestones, ETA, and available documents.</p>
+
+    <form id="trackForm" class="track-form" novalidate>
+      <label for="trackingNumber">Tracking number</label>
+      <div class="track-row">
+        <input id="trackingNumber" name="trackingNumber" type="text" autocomplete="off"
+          placeholder="e.g. GJ-2026-00142" required />
+        <button type="submit" class="form-submit">Track</button>
+      </div>
+      <p class="form-note">Demo numbers: GJ-2026-00142 · GJ-2026-00098 · GJ-2026-00055</p>
+    </form>
+
+    <div id="trackFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+    <div id="trackResult" class="track-result" hidden></div>
+  </main>
+
+  <footer class="app-footer">
+    <p><a href="/">← Back to G and J Freight</a></p>
+  </footer>
+  <script src="/track.js" defer></script>
+</body>
+</html>

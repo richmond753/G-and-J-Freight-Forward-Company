@@ -43,6 +43,10 @@ services:
       - key: ALLOWED_ORIGINS
         sync: false
 
+      # ── Staff CRM ───────────────────────────────────────────────
+      - key: ADMIN_TOKEN
+        sync: false
+
       # ── Rate limiting ───────────────────────────────────────────
       - key: RATE_LIMIT_WINDOW_MS
         value: "900000"

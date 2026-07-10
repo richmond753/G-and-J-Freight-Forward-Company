@@ -4,8 +4,29 @@
 
 const { body, validationResult } = require('express-validator');
 
+const MODES = ['sea', 'air', 'road', 'rail', 'multimodal', ''];
+
 // ── Validation rules ──────────────────────────────────────────────────────────
 const contactRules = [
+  // Honeypot — must be empty (bots fill hidden fields)
+  body('website')
+    .optional({ values: 'falsy' })
+    .isEmpty()
+    .withMessage('Spam detected.'),
+
+  // Simple math captcha: captchaAnswer must equal captchaExpected
+  body('captchaAnswer')
+    .trim()
+    .notEmpty()
+    .withMessage('Please solve the security check.')
+    .custom((value, { req }) => {
+      const expected = String(req.body.captchaExpected ?? '').trim();
+      if (!expected || String(value).trim() !== expected) {
+        throw new Error('Security check failed. Please try again.');
+      }
+      return true;
+    }),
+
   body('firstName')
     .trim()
     .notEmpty().withMessage('First name is required.')
@@ -33,6 +54,41 @@ const contactRules = [
     .trim()
     .isLength({ max: 100 }).withMessage('Service field is too long.'),
 
+  // Structured quote fields
+  body('origin')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ max: 120 }).withMessage('Origin must be 120 characters or fewer.'),
+
+  body('destination')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ max: 120 }).withMessage('Destination must be 120 characters or fewer.'),
+
+  body('mode')
+    .optional({ checkFalsy: true })
+    .trim()
+    .toLowerCase()
+    .isIn(MODES)
+    .withMessage('Please select a valid transport mode.'),
+
+  body('cargoType')
+    .optional({ checkFalsy: true })
+    .trim()
+    .isLength({ max: 120 }).withMessage('Cargo type must be 120 characters or fewer.'),
+
+  body('weightKg')
+    .optional({ checkFalsy: true })
+    .trim()
+    .matches(/^\d+(\.\d{1,2})?$/)
+    .withMessage('Weight must be a number (kg).'),
+
+  body('volumeCbm')
+    .optional({ checkFalsy: true })
+    .trim()
+    .matches(/^\d+(\.\d{1,2})?$/)
+    .withMessage('Volume must be a number (CBM).'),
+
   body('message')
     .trim()
     .notEmpty().withMessage('Message is required.')
@@ -47,7 +103,7 @@ function handleValidationErrors(req, res, next) {
     return res.status(422).json({
       success: false,
       message: 'Validation failed.',
-      errors:  errors.array().map(e => ({ field: e.path, message: e.msg })),
+      errors: errors.array().map((e) => ({ field: e.path, message: e.msg })),
     });
   }
   next();

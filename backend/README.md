@@ -1,63 +1,47 @@
 # G and J Freight Services – Backend
 
-Node.js / Express backend for the G and J Freight Services Limited website.
+Node.js / Express backend for the G and J Freight Services Limited website, tracking portal, staff CRM, and portal scaffolds.
 
 ---
 
 ## Project Structure
 
 ```
-gandjfreight/
-├── config/
-│   └── mailer.js          # Nodemailer SMTP transporter
-├── middleware/
-│   ├── rateLimiter.js     # Global + contact-form rate limiters
-│   └── validate.js        # express-validator rules & error handler
-├── routes/
-│   ├── api.js             # GET /api/health, /api/services, /api/company
-│   └── contact.js         # POST /api/contact (sends emails)
-├── public/
-│   └── index.html         # ← place your front-end file here
-├── .env.example           # copy to .env and fill in values
-├── package.json
-├── server.js              # main entry point
-└── README.md
+backend/
+├── config/mailer.js
+├── middleware/          # rate limit, validation, admin auth
+├── routes/              # api, contact, tracking, admin, portal
+├── utils/               # escapeHtml, leadsStore, shipmentsStore
+├── data/                # leads.json (runtime, gitignored)
+├── public/              # site + track/portal/admin pages
+├── tests/api.test.js
+├── server.js
+└── package.json
 ```
 
 ---
 
 ## Quick Start
 
-### 1. Install dependencies
 ```bash
 npm install
+cp .env.example .env   # fill SMTP + ADMIN_TOKEN + ALLOWED_ORIGINS
+npm run dev            # http://localhost:3000 (or PORT)
+npm test               # Jest + Supertest
 ```
 
-### 2. Configure environment variables
-```bash
-cp .env.example .env
-# Edit .env with your SMTP credentials and settings
-```
+---
 
-### 3. Add the front-end
-```bash
-# Copy the HTML file into the public/ folder so Express serves it
-cp /path/to/index.html public/
-```
+## Pages
 
-### 4. Run the server
+| Path | Purpose |
+|------|---------|
+| `/` | Marketing site + structured quote form |
+| `/track.html` | Customer shipment tracking |
+| `/portal.html` | Documents / payments / carrier scaffolds |
+| `/admin.html` | Staff lead inbox (requires `ADMIN_TOKEN`) |
 
-**Development** (auto-reload on save):
-```bash
-npm run dev
-```
-
-**Production**:
-```bash
-npm start
-```
-
-The server starts at `http://localhost:3000` (or the PORT in your `.env`).
+Demo tracking numbers: `GJ-2026-00142`, `GJ-2026-00098`, `GJ-2026-00055`
 
 ---
 
@@ -65,110 +49,55 @@ The server starts at `http://localhost:3000` (or the PORT in your `.env`).
 
 | Method | Route | Description |
 |--------|-------|-------------|
-| GET | `/api/health` | Server health check |
-| GET | `/api/services` | List all 6 services |
-| GET | `/api/services/:id` | Single service by ID |
-| GET | `/api/company` | Company info, contacts, vision/mission |
-| POST | `/api/contact` | Submit contact form (sends email) |
+| GET | `/api/health` | Health check |
+| GET | `/api/services` | List services |
+| GET | `/api/services/:id` | Single service |
+| GET | `/api/company` | Company profile |
+| POST | `/api/contact` | Quote / contact (email + CRM lead) |
+| GET | `/api/tracking/:number` | Shipment tracking |
+| GET | `/api/admin/leads` | CRM leads (Bearer `ADMIN_TOKEN`) |
+| PATCH | `/api/admin/leads/:id` | Update lead status |
+| GET | `/api/admin/stats` | CRM stats |
+| GET | `/api/portal/documents` | Document vault scaffold |
+| GET | `/api/portal/payments/methods` | Payment methods scaffold |
+| POST | `/api/portal/payments/intent` | Payment capture (501 until wired) |
+| GET | `/api/portal/carriers/status` | Carrier integration scaffold |
 
-### POST /api/contact – Request Body
+### POST /api/contact body
 
 ```json
 {
   "firstName": "John",
-  "lastName":  "Doe",
-  "email":     "john@example.com",
-  "phone":     "+233 24 000 0000",
-  "service":   "Air & Sea Freight",
-  "message":   "I need a quote for a 20ft container from China."
+  "lastName": "Doe",
+  "email": "john@example.com",
+  "phone": "+233 24 000 0000",
+  "service": "Air & Sea Freight",
+  "origin": "Shanghai, CN",
+  "destination": "Tema, GH",
+  "mode": "sea",
+  "cargoType": "FCL 20ft",
+  "weightKg": "1200",
+  "volumeCbm": "28",
+  "message": "Need a quote for next sailing.",
+  "captchaAnswer": "7",
+  "captchaExpected": "7",
+  "website": ""
 }
 ```
 
-### Success Response
-```json
-{ "success": true, "message": "Your message has been sent. We will be in touch shortly." }
-```
-
-### Validation Error Response (422)
-```json
-{
-  "success": false,
-  "message": "Validation failed.",
-  "errors":  [{ "field": "email", "message": "Please enter a valid email address." }]
-}
-```
+`website` is a honeypot and must be empty. Math captcha fields are required.
 
 ---
 
-## Email Setup (Gmail)
+## Security notes
 
-1. Enable **2-Step Verification** on your Google account.
-2. Generate an **App Password**: Google Account → Security → App Passwords.
-3. Set in `.env`:
-   ```
-   SMTP_USER=your_gmail@gmail.com
-   SMTP_PASS=your_16_char_app_password
-   ```
-
-For other providers (Outlook, SendGrid, Mailgun) update `SMTP_HOST` and `SMTP_PORT` accordingly.
+- Contact emails HTML-escape all user fields.
+- Helmet, rate limits, CORS allow-list, honeypot + captcha on contact.
+- Set a strong `ADMIN_TOKEN` before using `/admin.html`.
+- Rotate SMTP app passwords if they were ever exposed.
 
 ---
 
-## Connecting the Front-End
+## Deployment (Render)
 
-The contact form in `index.html` uses plain HTML with a JavaScript `fetch` call. Update the `handleSubmit` function in `index.html`:
-
-```js
-async function handleSubmit(e) {
-  e.preventDefault();
-  const payload = {
-    firstName: document.getElementById('fname').value,
-    lastName:  document.getElementById('lname').value,
-    email:     document.getElementById('email').value,
-    phone:     document.getElementById('phone').value,
-    service:   document.getElementById('service').value,
-    message:   document.getElementById('message').value,
-  };
-
-  try {
-    const res  = await fetch('/api/contact', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify(payload),
-    });
-    const data = await res.json();
-    document.getElementById('formFeedback').textContent = data.message;
-    document.getElementById('formFeedback').style.display = 'block';
-    if (res.ok) e.target.reset();
-  } catch {
-    document.getElementById('formFeedback').textContent =
-      'Network error. Please try again.';
-    document.getElementById('formFeedback').style.display = 'block';
-  }
-}
-```
-
----
-
-## Deployment (Ubuntu / VPS)
-
-```bash
-# Install Node.js (v18 LTS recommended)
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Install PM2 (process manager)
-sudo npm install -g pm2
-
-# Clone / upload your project, then:
-cd gandjfreight
-npm install --omit=dev
-cp .env.example .env   # fill in production values
-
-# Start with PM2
-pm2 start server.js --name gandjfreight
-pm2 save
-pm2 startup            # auto-start on reboot
-```
-
-For HTTPS, place Nginx in front as a reverse proxy and use Certbot for a free SSL certificate.
+See root `render.yaml`. Set `SMTP_*`, `CONTACT_RECEIVER`, `ALLOWED_ORIGINS`, and `ADMIN_TOKEN` in the dashboard.

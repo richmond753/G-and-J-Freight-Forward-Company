@@ -130,9 +130,20 @@ describe('GET /api/tracking', () => {
     expect(findShipment('gj-2026-00142')).toBeTruthy();
   });
 
-  test('404 for unknown', async () => {
-    const res = await request(app).get('/api/tracking/UNKNOWN');
-    expect(res.status).toBe(404);
+  test('returns carrier links for unknown container-like id', async () => {
+    const res = await request(app).get('/api/tracking/live').query({ number: 'MSKU1234567' });
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.links)).toBe(true);
+    expect(res.body.links.length).toBeGreaterThan(0);
+  });
+
+  test('lists carriers', async () => {
+    const res = await request(app).get('/api/tracking/carriers');
+    expect(res.status).toBe(200);
+    expect(res.body.data.some((c) => c.id === 'maersk')).toBe(true);
+    expect(res.body.data.some((c) => c.id === 'msc')).toBe(true);
+    expect(res.body.data.some((c) => c.id === 'cma-cgm')).toBe(true);
   });
 });
 

@@ -233,7 +233,7 @@ document.querySelectorAll('.faq-q').forEach(q => {
     services:'We offer 6 core services: ✈️ Air &amp; Sea Freight, 🚢 Import &amp; Export, 🏭 Warehousing, 📦 Consolidation, 🚛 Haulage and 💼 Consultancy. <a href="#services" data-close>See all services →</a>',
     contact: 'Reach us at:<br/>📞 +233 (0) 24 433 3374<br/>✉️ info@gandjfreightservices.com<br/>📍 Kpodo Plaza, Tema Comm 4, Accra – Ghana.<br/><a href="#contact" data-close>Go to contact →</a>',
     hours:   'Our business hours:<br/>Mon – Fri: 8:00am – 5:00pm<br/>Sat: 9:00am – 1:00pm (GMT).<br/>Outside these hours, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a> and we\'ll reply soon.',
-      track:   'Track your cargo in our portal: <a href="/track.html">Open tracking →</a><br/>Demo numbers: GJ-2026-00142, GJ-2026-00098, GJ-2026-00055.<br/>Or call 📞 +233 (0) 24 583 9831 / <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>.',
+      track:   'Track cargo here: <a href="/track.html">Open tracking →</a><br/>Use a G&amp;J booking (e.g. GJ-2026-00142) or a container number for Maersk / MSC / CMA CGM and more.<br/>Or call 📞 +233 (0) 24 583 9831 / <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>.',
     thanks:  'You\'re welcome! 😊 Is there anything else I can help you with?',
     default: 'I\'m not certain about that, but our team can help directly. Call 📞 +233 (0) 24 433 3374, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>, or use the <a href="#contact" data-close>contact form</a>.'
   };
@@ -293,21 +293,108 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 })();
 
-function googleTranslateElementInit() {
+window.googleTranslateElementInit = function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'en',
-    // 18 major languages: global + West African (relevant to Ghana)
-    includedLanguages: 'en,fr,es,ar,zh-CN,pt,de,ru,ja,hi,it,tr,nl,sw,ha,yo,ig,ak',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-    autoDisplay: false
+    includedLanguages: 'en,ak,fr,es,ar,zh-CN,pt,de,ru,ja,hi,it,tr,nl,sw,ha,yo,ig',
+    autoDisplay: false,
   }, 'google_translate_element');
-}
+};
+
+/* Native <select> language picker — always scrollable in the browser */
+(function initLanguagePicker() {
+  const select = document.getElementById('langSelect');
+  if (!select) return;
+
+  function readGoogTrans() {
+    const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
+    if (!match) return 'en';
+    const parts = decodeURIComponent(match[1]).split('/');
+    return parts[2] || 'en';
+  }
+
+  function clearGoogTransCookies() {
+    const hostname = location.hostname;
+    const expire = 'expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = 'googtrans=; path=/; ' + expire;
+    document.cookie = 'googtrans=; path=/; domain=' + hostname + '; ' + expire;
+    if (hostname.indexOf('.') !== -1) {
+      document.cookie = 'googtrans=; path=/; domain=.' + hostname + '; ' + expire;
+    }
+  }
+
+  function setGoogTransCookie(lang) {
+    clearGoogTransCookies();
+    if (lang === 'en') return;
+    const value = '/en/' + lang;
+    document.cookie = 'googtrans=' + value + '; path=/';
+    document.cookie = 'googtrans=' + value + '; path=/; domain=' + location.hostname;
+  }
+
+  function fireGoogleCombo(lang) {
+    const combo = document.querySelector('.goog-te-combo');
+    if (!combo) return false;
+    const opt = Array.from(combo.options).find((o) => o.value === lang);
+    if (!opt) return false;
+    combo.value = lang;
+    combo.dispatchEvent(new Event('change'));
+    return true;
+  }
+
+  function applyLanguage(lang) {
+    if (lang === 'en') {
+      clearGoogTransCookies();
+      location.href = location.pathname + location.search;
+      return;
+    }
+
+    setGoogTransCookie(lang);
+
+    if (fireGoogleCombo(lang)) return;
+
+    let tries = 0;
+    const wait = setInterval(() => {
+      tries += 1;
+      if (fireGoogleCombo(lang)) {
+        clearInterval(wait);
+        return;
+      }
+      if (tries > 8) {
+        clearInterval(wait);
+        // Final fallback: Google Translate of this page (always works)
+        const url =
+          'https://translate.google.com/translate?sl=en&tl=' +
+          encodeURIComponent(lang) +
+          '&u=' +
+          encodeURIComponent(location.href);
+        location.href = url;
+      }
+    }, 300);
+  }
+
+  // Sync select to current cookie language
+  const current = readGoogTrans();
+  if (Array.from(select.options).some((o) => o.value === current)) {
+    select.value = current;
+  }
+
+  select.addEventListener('change', () => applyLanguage(select.value));
+
+  // Load Google Translate engine
+  if (!document.getElementById('google-translate-script')) {
+    const script = document.createElement('script');
+    script.id = 'google-translate-script';
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+})();
 
 var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
 (function () {
   var TAWK_PROPERTY_ID = 'YOUR_TAWK_PROPERTY_ID';
   var TAWK_WIDGET_ID   = 'YOUR_TAWK_WIDGET_ID';
-  if (TAWK_PROPERTY_ID.indexOf('YOUR_') === 0) return; // not configured yet — skip loading
+  if (TAWK_PROPERTY_ID.indexOf('YOUR_') === 0) return;
   var s1 = document.createElement('script'), s0 = document.getElementsByTagName('script')[0];
   s1.async = true;
   s1.src = 'https://embed.tawk.to/' + TAWK_PROPERTY_ID + '/' + TAWK_WIDGET_ID;

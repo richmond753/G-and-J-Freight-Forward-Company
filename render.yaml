@@ -47,6 +47,12 @@ services:
       - key: ADMIN_TOKEN
         sync: false
 
+      # ── Optional live ocean tracking ────────────────────────────
+      - key: SHIPSGO_AUTH_CODE
+        sync: false
+      - key: MAERSK_CONSUMER_KEY
+        sync: false
+
       # ── Rate limiting ───────────────────────────────────────────
       - key: RATE_LIMIT_WINDOW_MS
         value: "900000"

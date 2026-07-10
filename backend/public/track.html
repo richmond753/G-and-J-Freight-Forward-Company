@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Track Shipment | G and J Freight Services</title>
-  <meta name="description" content="Track your G and J Freight shipment by booking reference." />
+  <meta name="description" content="Track G&J bookings and live ocean containers on Maersk, MSC, CMA CGM and more." />
   <meta name="theme-color" content="#0d1b2a" />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles.css" />
@@ -31,16 +31,29 @@
   <main id="main" class="app-main">
     <p class="section-label">Shipment visibility</p>
     <h1 class="section-title">Track your <em>cargo</em></h1>
-    <p class="app-lead">Enter your G&amp;J tracking number to see live milestones, ETA, and available documents.</p>
+    <p class="app-lead">
+      Enter a G&amp;J booking reference or a container number (e.g. MSKU1234567).
+      We auto-detect Maersk, MSC, CMA CGM, Hapag-Lloyd and other lines, then open live carrier tracking.
+    </p>
 
     <form id="trackForm" class="track-form" novalidate>
-      <label for="trackingNumber">Tracking number</label>
+      <label for="trackingNumber">Container / tracking number</label>
       <div class="track-row">
         <input id="trackingNumber" name="trackingNumber" type="text" autocomplete="off"
-          placeholder="e.g. GJ-2026-00142" required />
+          placeholder="e.g. MSKU1234567 or GJ-2026-00142" required />
+      </div>
+
+      <label for="carrierSelect" style="margin-top:1rem">Shipping line (optional)</label>
+      <div class="track-row">
+        <select id="carrierSelect" name="carrier">
+          <option value="">Auto-detect from container prefix</option>
+        </select>
         <button type="submit" class="form-submit">Track</button>
       </div>
-      <p class="form-note">Demo numbers: GJ-2026-00142 · GJ-2026-00098 · GJ-2026-00055</p>
+      <p class="form-note">
+        G&amp;J demos: GJ-2026-00142 · GJ-2026-00098 · GJ-2026-00055
+        · Ocean: use a real container number + line (Maersk / MSC / CMA CGM…)
+      </p>
     </form>
 
     <div id="trackFeedback" class="form-feedback" role="status" aria-live="polite"></div>

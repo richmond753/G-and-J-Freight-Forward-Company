@@ -114,9 +114,30 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
 
-  <div class="nav-translate" title="Translate this page">
+  <div class="nav-translate notranslate">
     <span class="globe" aria-hidden="true">🌐</span>
-    <div id="google_translate_element"></div>
+    <label for="langSelect" class="visually-hidden">Translate page</label>
+    <select id="langSelect" class="lang-select" aria-label="Translate this page into another language">
+      <option value="en">English</option>
+      <option value="ak">Twi (Akan)</option>
+      <option value="fr">Français</option>
+      <option value="es">Español</option>
+      <option value="ar">العربية</option>
+      <option value="zh-CN">中文 (简体)</option>
+      <option value="pt">Português</option>
+      <option value="de">Deutsch</option>
+      <option value="ru">Русский</option>
+      <option value="ja">日本語</option>
+      <option value="hi">हिन्दी</option>
+      <option value="it">Italiano</option>
+      <option value="tr">Türkçe</option>
+      <option value="nl">Nederlands</option>
+      <option value="sw">Kiswahili</option>
+      <option value="ha">Hausa</option>
+      <option value="yo">Yorùbá</option>
+      <option value="ig">Igbo</option>
+    </select>
+    <div id="google_translate_element" aria-hidden="true"></div>
   </div>
 
   <a href="#contact" class="nav-cta">Get a Quote</a>
@@ -821,19 +842,5 @@
 
 <!-- ═══ JAVASCRIPT ════════════════════════════════════════════════════════ -->
 <script src="/main.js" defer></script>
-
-<!-- ═══ GOOGLE PAGE TRANSLATOR (free, 18 languages) ═══════════════════════ -->
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
-
-<!-- ═══ TAWK.TO LIVE CHAT (free live human chat — optional) ═══════════════
-  To activate real-time human chat:
-    1. Create a free account at https://www.tawk.to
-    2. Dashboard → Administration → Channels → Chat Widget
-    3. Copy your Property ID and Widget ID and paste them below,
-       replacing YOUR_TAWK_PROPERTY_ID and YOUR_TAWK_WIDGET_ID.
-    TIP: In the Tawk dashboard, set the widget position to BOTTOM-LEFT so it
-         doesn't overlap the assistant / WhatsApp buttons on the right.
-  Until real IDs are added, this stays inactive (the built-in 🤖 assistant works regardless).
--->
 </body>
 </html>

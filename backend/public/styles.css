@@ -33,15 +33,16 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
 /* ─── NAVBAR ────────────────────────────────────────────────────── */
-nav {
-  position: fixed; top: 0; width: 100%; z-index: 1000;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 5%;
-  background: rgba(13,27,42,0.92);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(201,162,39,0.2);
-  transition: padding 0.3s, background 0.3s;
-}
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5%;
+      background: rgba(13,27,42,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,162,39,0.2);
+      transition: padding 0.3s, background 0.3s;
+      overflow: visible;
+    }
 nav.scrolled { padding: 0.6rem 5%; background: rgba(13,27,42,0.98); }
 
 .nav-logo {
@@ -782,33 +783,88 @@ textarea:focus-visible,
 }
 .fab-top.show { opacity: 1; visibility: visible; }
 
-/* ─── GOOGLE TRANSLATE WIDGET ───────────────────────────────────── */
-.nav-translate { display: flex; align-items: center; gap: 0.4rem; }
-.nav-translate .globe { color: var(--gold); font-size: 1rem; line-height: 1; }
-#google_translate_element { display: inline-block; line-height: 0; }
-/* shrink the gadget's default text, then re-show only the select */
-.goog-te-gadget { font-size: 0 !important; color: transparent !important; font-family: 'Barlow', sans-serif !important; }
-.goog-te-gadget .goog-te-combo {
-  background: rgba(255,255,255,0.05);
-  color: var(--mist);
-  border: 1px solid rgba(201,162,39,0.3);
-  padding: 0.35rem 0.5rem;
-  font-family: 'Barlow', sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  cursor: pointer; outline: none;
-  max-width: 150px;
+/* ─── LANGUAGE / TRANSLATE PICKER ───────────────────────────────── */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
 }
-.goog-te-combo:focus { border-color: var(--gold); }
-.goog-te-combo option { background: var(--navy2); color: var(--white); }
-/* hide Google's injected banner, logo & tooltip so the page stays clean */
+
+.nav-translate {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 1100;
+}
+
+.nav-translate .globe {
+  color: var(--gold);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.lang-select {
+  appearance: auto;
+  -webkit-appearance: menulist;
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid rgba(201,162,39,0.4);
+  padding: 0.4rem 0.55rem;
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  min-width: 140px;
+  max-width: 180px;
+  max-height: none;
+}
+
+.lang-select:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.lang-select option {
+  background: #152438;
+  color: #f0ebe3;
+}
+
+/* Keep Google's engine mounted but invisible */
+#google_translate_element {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+}
+
 .goog-te-banner-frame.skiptranslate,
 .goog-te-gadget-icon,
 .goog-logo-link,
-.goog-te-gadget span,
-#goog-gt-tt, .goog-te-balloon-frame { display: none !important; }
+#goog-gt-tt,
+.goog-te-balloon-frame {
+  display: none !important;
+}
+
 body { top: 0 !important; }
+body > .skiptranslate { display: none !important; }
 .goog-text-highlight { background: none !important; box-shadow: none !important; }
+
+@media (max-width: 900px) {
+  .nav-translate {
+    margin-left: auto;
+    margin-right: 0.35rem;
+  }
+  .lang-select {
+    min-width: 110px;
+    max-width: 130px;
+    font-size: 0.72rem;
+  }
+  .nav-translate .globe { display: none; }
+}
 
 /* ─── CHAT ASSISTANT ────────────────────────────────────────────── */
 .fab-chat { background: var(--navy2); color: var(--gold); border: 1px solid rgba(201,162,39,0.45); }
@@ -868,8 +924,6 @@ body { top: 0 !important; }
 .chat-input button:hover { background: var(--gold2); }
 @media (max-width: 480px) {
   .chat-panel { right: 0.75rem; left: 0.75rem; width: auto; bottom: 5.25rem; }
-  .nav-translate .globe { display: none; }
-  .goog-te-gadget .goog-te-combo { max-width: 120px; font-size: 0.72rem; }
 }
 
 /* ─── MOBILE MENU ───────────────────────────────────────────────── */

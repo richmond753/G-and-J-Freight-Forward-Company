@@ -841,17 +841,40 @@ textarea:focus-visible,
   overflow: hidden !important;
 }
 
+/* Hide Google chrome; keep our branded layout intact while text is translated */
 .goog-te-banner-frame.skiptranslate,
 .goog-te-gadget-icon,
 .goog-logo-link,
 #goog-gt-tt,
-.goog-te-balloon-frame {
+.goog-te-balloon-frame,
+.goog-te-spinner-pos,
+iframe.skiptranslate,
+body > .skiptranslate {
   display: none !important;
 }
 
-body { top: 0 !important; }
-body > .skiptranslate { display: none !important; }
-.goog-text-highlight { background: none !important; box-shadow: none !important; }
+body {
+  top: 0 !important;
+  position: static !important;
+  min-height: 100% !important;
+}
+
+html.translated-ltr body,
+html.translated-rtl body {
+  top: 0 !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+/* Don't let Google's injected font tags blow up spacing */
+font {
+  vertical-align: inherit !important;
+  font-size: inherit !important;
+  font-family: inherit !important;
+}
 
 @media (max-width: 900px) {
   .nav-translate {

@@ -301,8 +301,14 @@ window.googleTranslateElementInit = function googleTranslateElementInit() {
   }, 'google_translate_element');
 };
 
-/* Native <select> language picker — always scrollable in the browser */
+/* In-page language picker - cookie + reload on same domain (never translate.goog proxy) */
 (function initLanguagePicker() {
+  // Escape Google Translate proxy host that strips site CSS
+  if (/\.translate\.goog$/i.test(location.hostname)) {
+    location.replace('https://g-and-j-freight-forward-company.onrender.com/');
+    return;
+  }
+
   const select = document.getElementById('langSelect');
   if (!select) return;
 
@@ -331,48 +337,16 @@ window.googleTranslateElementInit = function googleTranslateElementInit() {
     document.cookie = 'googtrans=' + value + '; path=/; domain=' + location.hostname;
   }
 
-  function fireGoogleCombo(lang) {
-    const combo = document.querySelector('.goog-te-combo');
-    if (!combo) return false;
-    const opt = Array.from(combo.options).find((o) => o.value === lang);
-    if (!opt) return false;
-    combo.value = lang;
-    combo.dispatchEvent(new Event('change'));
-    return true;
-  }
-
   function applyLanguage(lang) {
     if (lang === 'en') {
       clearGoogTransCookies();
-      location.href = location.pathname + location.search;
+      location.reload();
       return;
     }
-
     setGoogTransCookie(lang);
-
-    if (fireGoogleCombo(lang)) return;
-
-    let tries = 0;
-    const wait = setInterval(() => {
-      tries += 1;
-      if (fireGoogleCombo(lang)) {
-        clearInterval(wait);
-        return;
-      }
-      if (tries > 8) {
-        clearInterval(wait);
-        // Final fallback: Google Translate of this page (always works)
-        const url =
-          'https://translate.google.com/translate?sl=en&tl=' +
-          encodeURIComponent(lang) +
-          '&u=' +
-          encodeURIComponent(location.href);
-        location.href = url;
-      }
-    }, 300);
+    location.reload();
   }
 
-  // Sync select to current cookie language
   const current = readGoogTrans();
   if (Array.from(select.options).some((o) => o.value === current)) {
     select.value = current;
@@ -380,7 +354,6 @@ window.googleTranslateElementInit = function googleTranslateElementInit() {
 
   select.addEventListener('change', () => applyLanguage(select.value));
 
-  // Load Google Translate engine
   if (!document.getElementById('google-translate-script')) {
     const script = document.createElement('script');
     script.id = 'google-translate-script';

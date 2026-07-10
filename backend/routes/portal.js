@@ -8,6 +8,7 @@ const router = express.Router();
 const { findShipment, listShipments } = require('../utils/shipmentsStore');
 const { publicPaymentConfig, getPaymentConfig } = require('../utils/paymentConfig');
 const { initializeTransaction, verifyTransaction } = require('../utils/paystack');
+const { createPaymentNotice } = require('../utils/paymentNoticesStore');
 const { contactLimiter } = require('../middleware/rateLimiter');
 const transporter = require('../config/mailer');
 const { escapeHtml } = require('../utils/escapeHtml');
@@ -48,10 +49,10 @@ router.get('/payments/methods', (_req, res) => {
     data: [
       {
         id: 'momo-mtn',
-        label: 'MTN Mobile Money',
+        label: 'Mobile Money',
         currency: 'GHS',
         status: 'available',
-        number: cfg.momo.numberDisplay,
+        numbers: (cfg.momo.numbers || []).map((n) => n.numberDisplay),
         accountName: cfg.momo.accountName,
       },
       {
@@ -70,7 +71,7 @@ router.get('/payments/methods', (_req, res) => {
         id: 'bank',
         label: 'Bank transfer',
         currency: 'GHS',
-        status: cfg.bank.configured ? 'available' : 'details_pending',
+        status: cfg.bank.configured ? 'available' : 'request_via_whatsapp',
         bank: cfg.bank.configured
           ? {
               name: cfg.bank.name,
@@ -214,7 +215,7 @@ router.post(
   [
     body('email').trim().isEmail().normalizeEmail(),
     body('amount').optional({ checkFalsy: true }).isFloat({ min: 0 }),
-    body('method').trim().isIn(['momo', 'bank']),
+    body('method').trim().isIn(['momo', 'bank', 'paystack']),
     body('trackingNumber').optional({ checkFalsy: true }).trim().isLength({ max: 40 }),
     body('reference').optional({ checkFalsy: true }).trim().isLength({ max: 80 }),
     body('note').optional({ checkFalsy: true }).trim().isLength({ max: 400 }),
@@ -224,43 +225,76 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({
         success: false,
-        message: 'Check your details and try again.',
+        message: 'Enter a valid email and payment method, then try again.',
+        errors: errors.array().map((e) => ({ field: e.path, message: e.msg })),
       });
     }
 
     const { email, amount, method, trackingNumber, reference, note } = req.body;
-    const to = process.env.CONTACT_RECEIVER || process.env.SMTP_USER;
+    const cfg = getPaymentConfig();
+    const notice = createPaymentNotice({
+      email,
+      amount: amount != null ? Number(amount) : null,
+      method,
+      trackingNumber: trackingNumber || '',
+      reference: reference || '',
+      note: note || '',
+    });
 
-    try {
-      await transporter.sendMail({
-        from: `"G and J Freight Payments" <${process.env.SMTP_USER}>`,
-        to,
-        replyTo: email,
-        subject: `Payment notice (${method.toUpperCase()}) — ${trackingNumber || reference || 'no ref'}`,
-        html: `
-          <p>A customer reported a manual payment.</p>
-          <ul>
-            <li>Method: ${escapeHtml(method)}</li>
-            <li>Email: ${escapeHtml(email)}</li>
-            <li>Amount (GHS): ${escapeHtml(String(amount || '—'))}</li>
-            <li>Tracking / invoice: ${escapeHtml(trackingNumber || '—')}</li>
-            <li>Their reference: ${escapeHtml(reference || '—')}</li>
-            <li>Note: ${escapeHtml(note || '—')}</li>
-          </ul>
-          <p>Please confirm in MoMo / bank statement before releasing cargo.</p>
-        `,
-      });
-    } catch (err) {
-      console.error('[Payments] notify email failed:', err.message);
-      return res.status(502).json({
-        success: false,
-        message: 'Could not send payment notice. Please WhatsApp or call accounts.',
-      });
+    let emailed = false;
+    const to = cfg.accountsEmail;
+    if (process.env.SMTP_USER && process.env.SMTP_PASS && to) {
+      try {
+        await transporter.sendMail({
+          from: `"G and J Freight Payments" <${process.env.SMTP_USER}>`,
+          to,
+          replyTo: email,
+          subject: `Payment notice (${String(method).toUpperCase()}) — ${
+            trackingNumber || reference || notice.id
+          }`,
+          html: `
+            <p>A customer reported a manual payment.</p>
+            <ul>
+              <li>Notice ID: ${escapeHtml(notice.id)}</li>
+              <li>Method: ${escapeHtml(method)}</li>
+              <li>Email: ${escapeHtml(email)}</li>
+              <li>Amount (GHS): ${escapeHtml(String(amount || '—'))}</li>
+              <li>Tracking / invoice: ${escapeHtml(trackingNumber || '—')}</li>
+              <li>Their reference: ${escapeHtml(reference || '—')}</li>
+              <li>Note: ${escapeHtml(note || '—')}</li>
+            </ul>
+            <p>Please confirm in MoMo / bank statement before releasing cargo.</p>
+          `,
+        });
+        emailed = true;
+      } catch (err) {
+        console.error('[Payments] notify email failed:', err.message);
+      }
     }
+
+    const waText = [
+      'Hello G and J Freight — I have paid.',
+      `Notice: ${notice.id}`,
+      `Method: ${method}`,
+      `Email: ${email}`,
+      amount != null ? `Amount: GHS ${amount}` : null,
+      trackingNumber ? `Invoice/tracking: ${trackingNumber}` : null,
+      reference ? `Reference: ${reference}` : null,
+      note ? `Note: ${note}` : null,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const whatsappUrl = `https://wa.me/${cfg.momo.number}?text=${encodeURIComponent(waText)}`;
 
     res.status(200).json({
       success: true,
-      message: 'Thanks — accounts has been notified. We will confirm your payment shortly.',
+      noticeId: notice.id,
+      emailed,
+      whatsappUrl,
+      message: emailed
+        ? 'Thanks — accounts has been emailed. We will confirm your payment shortly.'
+        : 'Payment notice saved. If email is unavailable, tap WhatsApp to alert accounts now.',
     });
   }
 );

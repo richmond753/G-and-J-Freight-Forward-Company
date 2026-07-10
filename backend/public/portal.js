@@ -9,12 +9,15 @@
       const res = await fetch('/api/portal/payments/methods');
       const data = await res.json();
       payMethods.innerHTML = (data.data || [])
-        .map(
-          (m) =>
-            `<li><strong>${m.label}</strong> · ${m.currency} <span class="status-pill">${m.status}</span>${
-              m.number ? '<br/><span class="lead-muted">' + m.number + (m.accountName ? ' · ' + m.accountName : '') + '</span>' : ''
-            }</li>`
-        )
+        .map((m) => {
+          const nums = (m.numbers || []).join(' · ');
+          const extra = nums
+            ? '<br/><span class="lead-muted">' + nums + (m.accountName ? ' · ' + m.accountName : '') + '</span>'
+            : m.number
+              ? '<br/><span class="lead-muted">' + m.number + (m.accountName ? ' · ' + m.accountName : '') + '</span>'
+              : '';
+          return `<li><strong>${m.label}</strong> · ${m.currency} <span class="status-pill">${m.status}</span>${extra}</li>`;
+        })
         .join('');
     } catch {
       payMethods.textContent = 'Could not load payment methods.';

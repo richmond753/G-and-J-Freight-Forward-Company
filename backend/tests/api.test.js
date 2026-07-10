@@ -172,13 +172,31 @@ describe('Portal scaffolds', () => {
     expect(res.body.data.length).toBeGreaterThan(0);
     const momo = res.body.data.find((m) => m.id === 'momo-mtn');
     expect(momo.status).toBe('available');
+    expect(momo.numbers.length).toBeGreaterThanOrEqual(4);
   });
 
   test('payment config exposes MoMo defaults', async () => {
     const res = await request(app).get('/api/portal/payments/config');
     expect(res.status).toBe(200);
     expect(res.body.data.momo.number).toBeTruthy();
+    expect(res.body.data.momo.numbers.length).toBeGreaterThanOrEqual(4);
     expect(res.body.data.paystack.enabled).toBe(false);
+  });
+
+  test('payment notify saves notice even without SMTP delivery', async () => {
+    const res = await request(app)
+      .post('/api/portal/payments/notify')
+      .send({
+        email: 'payer@example.com',
+        method: 'momo',
+        amount: 250,
+        trackingNumber: 'GJ-TEST-PAY',
+        reference: 'MOMO123',
+      });
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.noticeId).toMatch(/^PAY-/);
+    expect(res.body.whatsappUrl).toContain('wa.me');
   });
 
   test('payment intent requires Paystack keys', async () => {

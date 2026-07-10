@@ -166,17 +166,33 @@ describe('Admin CRM', () => {
 });
 
 describe('Portal scaffolds', () => {
-  test('payment methods', async () => {
+  test('payment methods include MoMo available', async () => {
     const res = await request(app).get('/api/portal/payments/methods');
     expect(res.status).toBe(200);
     expect(res.body.data.length).toBeGreaterThan(0);
+    const momo = res.body.data.find((m) => m.id === 'momo-mtn');
+    expect(momo.status).toBe('available');
   });
 
-  test('payment intent is not implemented', async () => {
+  test('payment config exposes MoMo defaults', async () => {
+    const res = await request(app).get('/api/portal/payments/config');
+    expect(res.status).toBe(200);
+    expect(res.body.data.momo.number).toBeTruthy();
+    expect(res.body.data.paystack.enabled).toBe(false);
+  });
+
+  test('payment intent requires Paystack keys', async () => {
     const res = await request(app)
       .post('/api/portal/payments/intent')
-      .send({ trackingNumber: 'GJ-2026-00142', method: 'momo-mtn', amount: 100 });
+      .send({ email: 'payer@example.com', amount: 100, trackingNumber: 'GJ-2026-00142' });
     expect(res.status).toBe(501);
+    expect(res.body.payUrl).toBe('/pay.html');
+  });
+
+  test('serves pay page', async () => {
+    const res = await request(app).get('/pay.html');
+    expect(res.status).toBe(200);
+    expect(res.text).toContain('Pay');
   });
 });
 

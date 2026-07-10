@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pay Invoice | G and J Freight Services</title>
+  <meta name="description" content="Pay G and J Freight via MTN MoMo, bank transfer, or Paystack (MoMo + card)." />
+  <meta name="theme-color" content="#0d1b2a" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/app-pages.css" />
+</head>
+<body class="app-page">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="app-header">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-icon">G&amp;J</div>
+      <div class="nav-logo-text">
+        <span>G and J</span>
+        <span>Freight Services</span>
+      </div>
+    </a>
+    <nav class="app-nav" aria-label="Secondary">
+      <a href="/">Home</a>
+      <a href="/portal.html">Portal</a>
+      <a href="/pay.html" aria-current="page">Pay</a>
+      <a href="/account.html">Account</a>
+    </nav>
+  </header>
+
+  <main id="main" class="app-main">
+    <p class="section-label">Accounts</p>
+    <h1 class="section-title">Pay <em>G&amp;J</em></h1>
+    <p class="app-lead">Settle invoices by MTN MoMo, bank transfer, or online Paystack (MoMo + card when keys are live). Phone and WhatsApp stay available for support.</p>
+
+    <div id="verifyBanner" class="form-feedback" role="status" aria-live="polite" hidden></div>
+
+    <section class="app-panel" aria-labelledby="momoHeading">
+      <h2 id="momoHeading" class="portal-card-title">MTN Mobile Money</h2>
+      <dl class="track-meta" id="momoDetails">
+        <div><dt>Network</dt><dd>MTN</dd></div>
+        <div><dt>Name</dt><dd id="momoName">…</dd></div>
+        <div><dt>Number</dt><dd id="momoNumber">…</dd></div>
+      </dl>
+      <div class="track-row" style="margin-top:1rem">
+        <button type="button" class="form-submit" id="copyMomoBtn">Copy MoMo number</button>
+        <a class="btn-outline" id="momoWaLink" href="#" target="_blank" rel="noopener">WhatsApp about payment</a>
+      </div>
+      <p class="form-note">Use your invoice or tracking number as the MoMo reference / remark.</p>
+    </section>
+
+    <section class="app-panel" style="margin-top:1.25rem" aria-labelledby="bankHeading">
+      <h2 id="bankHeading" class="portal-card-title">Bank transfer</h2>
+      <div id="bankDetails"></div>
+    </section>
+
+    <section class="app-panel" style="margin-top:1.25rem" aria-labelledby="paystackHeading">
+      <h2 id="paystackHeading" class="portal-card-title">Pay online (Paystack)</h2>
+      <p id="paystackStatus" class="form-note">Checking availability…</p>
+      <form id="paystackForm" class="track-form" hidden>
+        <label for="payEmail">Email *</label>
+        <input id="payEmail" type="email" required autocomplete="email" placeholder="you@company.com" />
+
+        <label for="payAmount" style="margin-top:0.75rem">Amount (GHS) *</label>
+        <input id="payAmount" type="number" required min="1" step="0.01" placeholder="500.00" />
+
+        <label for="payTracking" style="margin-top:0.75rem">Invoice / tracking (optional)</label>
+        <input id="payTracking" type="text" maxlength="40" placeholder="GJ-2026-00142" />
+
+        <label for="payNote" style="margin-top:0.75rem">Note (optional)</label>
+        <input id="payNote" type="text" maxlength="300" placeholder="Container / BL reference" />
+
+        <div class="track-row" style="margin-top:1rem">
+          <button type="submit" class="form-submit">Pay with MoMo / Card</button>
+        </div>
+      </form>
+      <div id="paystackFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="app-panel" style="margin-top:1.25rem" aria-labelledby="notifyHeading">
+      <h2 id="notifyHeading" class="portal-card-title">I have paid (MoMo / bank)</h2>
+      <p class="form-note">After a manual transfer, tell accounts so we can confirm and release.</p>
+      <form id="notifyForm" class="track-form">
+        <label for="notifyEmail">Your email *</label>
+        <input id="notifyEmail" type="email" required autocomplete="email" />
+
+        <label for="notifyMethod" style="margin-top:0.75rem">Method *</label>
+        <select id="notifyMethod" required>
+          <option value="momo">MTN MoMo</option>
+          <option value="bank">Bank transfer</option>
+        </select>
+
+        <label for="notifyAmount" style="margin-top:0.75rem">Amount (GHS)</label>
+        <input id="notifyAmount" type="number" min="0" step="0.01" />
+
+        <label for="notifyTracking" style="margin-top:0.75rem">Invoice / tracking</label>
+        <input id="notifyTracking" type="text" maxlength="40" />
+
+        <label for="notifyRef" style="margin-top:0.75rem">MoMo / bank reference</label>
+        <input id="notifyRef" type="text" maxlength="80" />
+
+        <label for="notifyNote" style="margin-top:0.75rem">Note</label>
+        <input id="notifyNote" type="text" maxlength="400" />
+
+        <div class="track-row" style="margin-top:1rem">
+          <button type="submit" class="form-submit">Notify accounts</button>
+        </div>
+      </form>
+      <div id="notifyFeedback" class="form-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <p class="form-note" style="margin-top:1.5rem">
+      Need help? <a href="tel:+233244333374" style="color:var(--gold)">Call</a>
+      or <a href="https://wa.me/233244333374" style="color:var(--gold)" target="_blank" rel="noopener">WhatsApp</a>
+      — same number for support. <a href="/account.html" style="color:var(--gold)">Customer login →</a>
+    </p>
+  </main>
+
+  <footer class="app-footer">
+    <p><a href="/portal.html">← Portal</a> · <a href="/">Home</a></p>
+  </footer>
+  <script src="/pay.js" defer></script>
+</body>
+</html>

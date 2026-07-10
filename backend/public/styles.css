@@ -775,6 +775,7 @@ textarea:focus-visible,
 .fab:hover { transform: translateY(-3px) scale(1.05); }
 .fab-whatsapp { background: #25d366; }
 .fab-call { background: var(--gold); color: var(--navy); }
+.fab-pay { background: #0f766e; color: #fff; font-weight: 700; font-size: 1.25rem; }
 .fab-top {
   background: var(--steel); color: var(--gold);
   border: 1px solid rgba(201,162,39,0.4);

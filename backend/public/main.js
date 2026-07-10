@@ -231,15 +231,19 @@ document.querySelectorAll('.faq-q').forEach(q => {
     hello:   'Hello! 👋 I\'m the G&amp;J virtual assistant. Ask me about <strong>quotes</strong>, <strong>services</strong>, <strong>contact details</strong>, <strong>business hours</strong> or <strong>tracking</strong>.',
     quote:   'You can request a free quote with our form — tell us your cargo type, origin, destination and weight/volume. <a href="#contact" data-close>Open the quote form →</a><br/>Prefer to talk now? <a href="' + WA + '" target="_blank" rel="noopener">Message us on WhatsApp</a>.',
     services:'We offer 6 core services: ✈️ Air &amp; Sea Freight, 🚢 Import &amp; Export, 🏭 Warehousing, 📦 Consolidation, 🚛 Haulage and 💼 Consultancy. <a href="#services" data-close>See all services →</a>',
-    contact: 'Reach us at:<br/>📞 +233 (0) 24 433 3374<br/>✉️ info@gandjfreightservices.com<br/>📍 Kpodo Plaza, Tema Comm 4, Accra – Ghana.<br/><a href="#contact" data-close>Go to contact →</a>',
+    contact: 'Reach us at:<br/>📞 +233 (0) 24 433 3374<br/>✉️ info@gandjfreightservices.com<br/>📍 Kpodo Plaza, Tema Comm 4, Accra – Ghana.<br/>💳 Pay MoMo / bank: <a href="/pay.html">Open Pay page →</a><br/><a href="#contact" data-close>Go to contact →</a>',
     hours:   'Our business hours:<br/>Mon – Fri: 8:00am – 5:00pm<br/>Sat: 9:00am – 1:00pm (GMT).<br/>Outside these hours, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a> and we\'ll reply soon.',
-      track:   'Track cargo here: <a href="/track.html">Open tracking →</a><br/>Use a G&amp;J booking (e.g. GJ-2026-00142) or a container number for Maersk / MSC / CMA CGM and more.<br/>Or call 📞 +233 (0) 24 583 9831 / <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>.',
+    track:   'Track cargo here: <a href="/track.html">Open tracking →</a><br/>Use a G&amp;J booking (e.g. GJ-2026-00142) or a container number for Maersk / MSC / CMA CGM and more.<br/>Or call 📞 +233 (0) 24 583 9831 / <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>.',
+    pay:     'Pay invoices via <strong>MTN MoMo</strong>, bank transfer, or Paystack (MoMo + card when enabled).<br/><a href="/pay.html">Open the Pay page →</a>',
+    account: 'Customer login: <a href="/account.html">Open account →</a> for saved quotes and past shipments.',
     thanks:  'You\'re welcome! 😊 Is there anything else I can help you with?',
-    default: 'I\'m not certain about that, but our team can help directly. Call 📞 +233 (0) 24 433 3374, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>, or use the <a href="#contact" data-close>contact form</a>.'
+    default: 'I\'m not certain about that, but our team can help directly. Call 📞 +233 (0) 24 433 3374, <a href="' + WA + '" target="_blank" rel="noopener">WhatsApp us</a>, <a href="/pay.html">pay an invoice</a>, or use the <a href="#contact" data-close>contact form</a>.'
   };
 
   function detect(text) {
     const t = text.toLowerCase();
+    if (/(pay|payment|momo|mobile money|invoice|bank transfer|paystack)/.test(t)) return 'pay';
+    if (/(login|account|sign in|saved quote)/.test(t)) return 'account';
     if (/(quote|price|pricing|cost|rate|estimate|charge)/.test(t)) return 'quote';
     if (/(service|freight|ship|cargo|haulage|warehous|import|export|consolid|consult|air|sea)/.test(t)) return 'services';
     if (/(contact|email|phone|call|address|location|where.*(you|office)|reach)/.test(t)) return 'contact';

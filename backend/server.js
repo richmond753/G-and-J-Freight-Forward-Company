@@ -80,6 +80,7 @@ app.use(
           'https://*.gstatic.com',
           'https://api.maersk.com',
           'https://shipsgo.com',
+          'https://api.paystack.co',
           'https://*.tawk.to',
           'wss://*.tawk.to',
         ],
@@ -167,6 +168,8 @@ const pages = {
   '/guides/fcl-vs-lcl.html': 'guides/fcl-vs-lcl.html',
   '/guides/hs-code-basics': 'guides/hs-code-basics.html',
   '/guides/hs-code-basics.html': 'guides/hs-code-basics.html',
+  '/pay': 'pay.html',
+  '/pay.html': 'pay.html',
 };
 
 Object.entries(pages).forEach(([route, file]) => {

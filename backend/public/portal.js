@@ -11,7 +11,9 @@
       payMethods.innerHTML = (data.data || [])
         .map(
           (m) =>
-            `<li><strong>${m.label}</strong> · ${m.currency} <span class="status-pill">${m.status}</span></li>`
+            `<li><strong>${m.label}</strong> · ${m.currency} <span class="status-pill">${m.status}</span>${
+              m.number ? '<br/><span class="lead-muted">' + m.number + (m.accountName ? ' · ' + m.accountName : '') + '</span>' : ''
+            }</li>`
         )
         .join('');
     } catch {

@@ -16,6 +16,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://g-and-j-freight-forward-company.onrender.com/pay.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://g-and-j-freight-forward-company.onrender.com/docs.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

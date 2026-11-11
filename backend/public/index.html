@@ -193,6 +193,15 @@
       <a href="#services" class="btn-primary">Explore Services</a>
       <a href="#contact" class="btn-outline">Contact Us</a>
     </div>
+    <form class="hero-track" action="/track.html" method="get">
+      <label for="hero-track-number">Already shipping with us? Track your cargo.</label>
+      <div class="hero-track-row">
+        <input id="hero-track-number" name="number" type="text" autocomplete="off"
+          placeholder="Booking or container number" aria-label="Booking or container number" required />
+        <button type="submit">Track shipment</button>
+      </div>
+      <p>Use your G&amp;J booking reference or container number.</p>
+    </form>
   </div>
   <div class="hero-ship"></div>
   <div class="scroll-down">
@@ -866,6 +875,7 @@
 
 
 <!-- ═══ JAVASCRIPT ════════════════════════════════════════════════════════ -->
+<script src="/api-config.js" defer></script>
 <script src="/main.js" defer></script>
 </body>
 </html>

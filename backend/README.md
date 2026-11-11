@@ -63,6 +63,9 @@ Demo tracking numbers: `GJ-2026-00142`, `GJ-2026-00098`, `GJ-2026-00055`
 | POST | `/api/portal/payments/intent` | Payment capture (501 until wired) |
 | GET | `/api/portal/carriers/status` | Carrier integration scaffold |
 
+The Render health check at `/api/health` is exempt from the global API rate limit;
+customer-facing endpoints remain rate-limited.
+
 ### POST /api/contact body
 
 ```json

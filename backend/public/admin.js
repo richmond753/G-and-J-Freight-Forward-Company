@@ -24,7 +24,7 @@
   }
 
   async function api(path, options = {}) {
-    const res = await fetch(path, {
+    const res = await apiFetch(path, {
       ...options,
       headers: {
         'Content-Type': 'application/json',

@@ -227,6 +227,16 @@ describe('Static assets', () => {
     expect(res.text).toContain('G and J Freight');
   });
 
+  test('homepage tracking form sends references to the existing tracker', async () => {
+    const home = await request(app).get('/');
+    expect(home.text).toMatch(/action="\/track\.html" method="get"/);
+    expect(home.text).toMatch(/name="number"/);
+
+    const trackingScript = await request(app).get('/track.js');
+    expect(trackingScript.status).toBe(200);
+    expect(trackingScript.text).toContain("params.get('number')");
+  });
+
   test('serves track page', async () => {
     const res = await request(app).get('/track.html');
     expect(res.status).toBe(200);
@@ -330,6 +340,28 @@ describe('New app pages', () => {
     ]) {
       const res = await request(app).get(path);
       expect(res.status).toBe(200);
+    }
+  });
+});
+
+describe('Render health checks', () => {
+  test('health probes bypass the global limit while API routes remain limited', async () => {
+    const previousMax = process.env.RATE_LIMIT_MAX;
+    process.env.RATE_LIMIT_MAX = '1';
+
+    let limitedApp;
+    try {
+      jest.isolateModules(() => {
+        limitedApp = require('../server');
+      });
+
+      expect((await request(limitedApp).get('/api/health')).status).toBe(200);
+      expect((await request(limitedApp).get('/api/health')).status).toBe(200);
+      expect((await request(limitedApp).get('/api/services')).status).toBe(200);
+      expect((await request(limitedApp).get('/api/services')).status).toBe(429);
+    } finally {
+      if (previousMax === undefined) delete process.env.RATE_LIMIT_MAX;
+      else process.env.RATE_LIMIT_MAX = previousMax;
     }
   });
 });

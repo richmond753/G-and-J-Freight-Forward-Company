@@ -170,6 +170,43 @@ nav.scrolled { padding: 0.6rem 5%; background: rgba(13,27,42,0.98); }
   display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
   animation: fadeUp 1s 0.6s ease both;
 }
+.hero-track {
+  max-width: 560px;
+  margin-top: 1.75rem;
+  padding: 1rem;
+  background: rgba(13,27,42,0.82);
+  border: 1px solid rgba(201,162,39,0.35);
+}
+.hero-track label {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--white);
+  font-weight: 600;
+}
+.hero-track-row { display: flex; gap: 0.6rem; }
+.hero-track input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.8rem;
+  background: var(--navy2);
+  border: 1px solid rgba(244,241,236,0.3);
+  color: var(--white);
+  font: inherit;
+}
+.hero-track input:focus-visible,
+.hero-track button:focus-visible { outline: 2px solid var(--gold2); outline-offset: 2px; }
+.hero-track button {
+  padding: 0.8rem 1rem;
+  background: var(--gold);
+  border: 0;
+  color: var(--navy);
+  cursor: pointer;
+  font: 700 0.9rem 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hero-track button:hover { background: var(--gold2); }
+.hero-track p { margin-top: 0.55rem; color: var(--mist); font-size: 0.8rem; }
 .btn-primary {
   background: var(--gold); color: var(--navy);
   padding: 0.85rem 2.2rem; border: none; cursor: pointer;
@@ -964,6 +1001,8 @@ font {
   .hero-stat-num { font-size: 2rem; }
   .hero-buttons { flex-direction: column; }
   .btn-primary, .btn-outline { text-align: center; width: 100%; }
+  .hero-track-row { flex-direction: column; }
+  .hero-track button { min-height: 44px; }
 
   /* Section fixes */
   section { padding: 4rem 6%; }

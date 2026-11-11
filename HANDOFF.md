@@ -110,3 +110,33 @@ See `backend/public/images/README.txt` for suggested filenames. Do **not** renam
 ---
 
 *Built for G and J Freight Services Limited — Tema, Ghana.*
+
+---
+
+## Google Hosting (Firebase Hosting)
+
+The public pages can be served on Firebase Hosting's no-cost Spark plan. The
+customer-data API remains on Render because it currently persists leads,
+documents, and other records on local disk; moving that API to an ephemeral
+Google container without first migrating its storage could lose customer data.
+
+Firebase provides a `*.web.app` address at no hosting charge within its free
+limits. A root/custom domain such as `gandjfreightservices.com` can also point
+to Firebase at no extra hosting charge, but the domain itself must already be
+registered and owned by the company. If it is not, domain registration is an
+additional cost; Firebase does not provide free root domains.
+
+To publish the static pages after signing in with the company's Google account:
+
+1. Create or select a Firebase project and choose its Hosting site.
+2. From the repository root, run `npx firebase-tools login`.
+3. Set the Render service's `ALLOWED_ORIGINS` to include the Firebase site
+   origin and any verified custom domain, preserving any existing allowed
+   origins. Save the setting and wait for Render to redeploy.
+4. Run `npx firebase-tools deploy --only hosting --project <firebase-project-id>`.
+5. To use the company's root domain, add it in Firebase Console → Hosting →
+   Add custom domain, then apply the exact DNS records Firebase provides.
+
+The frontend routes API requests to the existing Render service when served
+from Firebase. Keep both origins in use until the API's data and uploaded files
+have been migrated to persistent Google services and verified.

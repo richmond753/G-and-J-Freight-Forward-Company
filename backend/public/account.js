@@ -35,7 +35,7 @@
     const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
     const token = getToken();
     if (token) headers.Authorization = 'Bearer ' + token;
-    const res = await fetch(path, { ...options, headers });
+    const res = await apiFetch(path, { ...options, headers });
     const data = await res.json().catch(() => ({}));
     return { res, data };
   }

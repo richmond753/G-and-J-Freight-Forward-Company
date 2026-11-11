@@ -12,6 +12,7 @@ const maxContact = 10; // max 10 contact submissions per window per IP
 const globalLimiter = rateLimit({
   windowMs,
   max: maxGlobal,
+  skip: (req) => req.path === '/api/health',
   standardHeaders: true,
   legacyHeaders:   false,
   message: { success: false, message: 'Too many requests. Please try again later.' },

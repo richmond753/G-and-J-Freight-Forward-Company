@@ -20,7 +20,7 @@
 
   async function loadTypes() {
     try {
-      const res = await fetch('/api/documents/types');
+      const res = await apiFetch('/api/documents/types');
       const data = await res.json();
       (data.data || []).forEach((t) => {
         const opt = document.createElement('option');
@@ -38,7 +38,7 @@
     const fd = new FormData(uploadForm);
     showFeedback('Uploading…', '');
     try {
-      const res = await fetch('/api/documents/upload', { method: 'POST', body: fd });
+      const res = await apiFetch('/api/documents/upload', { method: 'POST', body: fd });
       const data = await res.json();
       showFeedback(
         data.message || (res.ok ? 'Uploaded.' : 'Upload failed.'),
@@ -66,7 +66,7 @@
     }
     docsList.innerHTML = '<li class="form-note">Loading…</li>';
     try {
-      const res = await fetch(
+      const res = await apiFetch(
         '/api/documents?trackingNumber=' + encodeURIComponent(trackingNumber)
       );
       const data = await res.json();

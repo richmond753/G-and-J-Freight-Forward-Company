@@ -31,7 +31,7 @@
 
   async function loadCarriers() {
     try {
-      const res = await fetch('/api/tracking/carriers');
+      const res = await apiFetch('/api/tracking/carriers');
       const data = await res.json();
       (data.data || []).forEach((c) => {
         const opt = document.createElement('option');
@@ -129,7 +129,7 @@
     if (carrier) qs.set('carrier', carrier);
 
     try {
-      const res = await fetch('/api/tracking/live?' + qs.toString());
+      const res = await apiFetch('/api/tracking/live?' + qs.toString());
       const data = await res.json();
       if (!res.ok || !data.success) {
         showFeedback(data.message || 'Shipment not found.', 'error');

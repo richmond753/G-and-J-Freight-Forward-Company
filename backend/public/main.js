@@ -128,7 +128,7 @@ async function handleSubmit(e) {
   btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Sending…';
 
   try {
-    const res  = await fetch('/api/contact', {
+    const res  = await apiFetch('/api/contact', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body:    JSON.stringify(payload),

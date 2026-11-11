@@ -43,7 +43,7 @@
   }
 
   async function loadConfig() {
-    const res = await fetch('/api/portal/payments/config');
+    const res = await apiFetch('/api/portal/payments/config');
     const data = await res.json();
     const cfg = data.data || {};
     cfgCache = cfg;
@@ -142,7 +142,7 @@
 
     show(paystackFeedback, 'Starting Paystack checkout…', '');
     try {
-      const res = await fetch('/api/portal/payments/intent', {
+      const res = await apiFetch('/api/portal/payments/intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -178,7 +178,7 @@
       note: document.getElementById('notifyNote').value.trim(),
     };
     try {
-      const res = await fetch('/api/portal/payments/notify', {
+      const res = await apiFetch('/api/portal/payments/notify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -209,7 +209,7 @@
     verifyBanner.hidden = false;
     show(verifyBanner, 'Verifying payment ' + reference + '…', '');
     try {
-      const res = await fetch(
+      const res = await apiFetch(
         '/api/portal/payments/verify?reference=' + encodeURIComponent(reference)
       );
       const data = await res.json();

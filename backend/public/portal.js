@@ -6,7 +6,7 @@
 
   async function loadPayments() {
     try {
-      const res = await fetch('/api/portal/payments/methods');
+      const res = await apiFetch('/api/portal/payments/methods');
       const data = await res.json();
       payMethods.innerHTML = (data.data || [])
         .map((m) => {
@@ -26,7 +26,7 @@
 
   async function loadCarriers() {
     try {
-      const res = await fetch('/api/portal/carriers/status');
+      const res = await apiFetch('/api/portal/carriers/status');
       const data = await res.json();
       const providers = (data.data && data.data.providers) || [];
       carrierStatus.innerHTML = providers
@@ -45,7 +45,7 @@
     const number = document.getElementById('docsTracking').value.trim();
     docsList.innerHTML = '<li>Loading…</li>';
     try {
-      const res = await fetch('/api/portal/documents?trackingNumber=' + encodeURIComponent(number));
+      const res = await apiFetch('/api/portal/documents?trackingNumber=' + encodeURIComponent(number));
       const data = await res.json();
       if (!res.ok || !data.success) {
         docsList.innerHTML = `<li>${data.message || 'Not found.'}</li>`;

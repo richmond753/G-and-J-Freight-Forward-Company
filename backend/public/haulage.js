@@ -20,7 +20,7 @@
 
   async function loadStatuses() {
     try {
-      const res = await fetch('/api/haulage/statuses');
+      const res = await apiFetch('/api/haulage/statuses');
       const data = await res.json();
       (data.data || []).forEach((s) => {
         const opt = document.createElement('option');
@@ -65,7 +65,7 @@
     const id = document.getElementById('tripId').value.trim();
     tripResult.hidden = true;
     try {
-      const res = await fetch('/api/haulage/' + encodeURIComponent(id));
+      const res = await apiFetch('/api/haulage/' + encodeURIComponent(id));
       const data = await res.json();
       if (!res.ok) {
         tripResult.hidden = false;
@@ -84,7 +84,7 @@
     e.preventDefault();
     showFeedback(updateFeedback, 'Posting update…', '');
     try {
-      const res = await fetch('/api/haulage/update', {
+      const res = await apiFetch('/api/haulage/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
